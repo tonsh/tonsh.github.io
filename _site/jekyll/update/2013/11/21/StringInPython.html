@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Python 里的字符串赋值</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Tonsh's Blog</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Python 里的字符串赋值</h2>
+<p class="meta">21 Nov 2013</p>
+
+<div class="post">
+<p>在 python 里字符串是被当作不可变变量处理的。</p>
+
+<div class="highlight"><pre><code class="bash">&gt;&gt;&gt; <span class="nv">a</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+&gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> a
+&gt;&gt;&gt; <span class="nv">a</span> <span class="o">==</span> b
+True
+&gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+&gt;&gt;&gt; a
+a
+&gt;&gt;&gt; b
+b
+</code></pre></div>
+
+<p>说明 Python 没有把字符串赋值当作引用传递处理。</p>
+
+<p>继续研究以下代码，查看字符串赋值过程中，变量标识是如何变化的：</p>
+
+<h5>当变量b初次赋值时，与 a 指向相同的内存空间。</h5>
+
+<div class="highlight"><pre><code class="bash">&gt;&gt;&gt; <span class="nv">a</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+&gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
+4464547200
+&gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> a
+&gt;&gt;&gt; id<span class="o">(</span>b<span class="o">)</span>
+4464547200
+</code></pre></div>
+
+<h5>若 a或b 任意一个值改变时, 被改变的变量指向的内存空间会变化。</h5>
+
+<div class="highlight"><pre><code class="bash">&gt;&gt;&gt; <span class="nv">a</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+&gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> a
+&gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+&gt;&gt;&gt; id<span class="o">(</span>b<span class="o">)</span>
+4464546880
+&gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
+4464547200
+</code></pre></div>
+
+<h5>如果增加字符串的长度？</h5>
+
+<div class="highlight"><pre><code class="bash">&gt;&gt;&gt; <span class="nv">a</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+&gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
+&gt;&gt;&gt; 4464547200
+&gt;&gt;&gt; a +<span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+&gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
+4465546784
+&gt;&gt;&gt; a +<span class="o">=</span> <span class="s1">&#39;c&#39;</span>
+&gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
+4465546784
+</code></pre></div>
+
+<p>神奇的事情发生了，第一次修改字符串 a 时，理论上应该只申请两个字符的空间，但是Python会额外多分配几个字符（大于2个字符），所以之后的继续增加a的长度，a指向的地址并没有变化，直到分配的空间占满后，a 的地址才会变化，下面给些具体的数值，大家感受一下：</p>
+
+<div class="highlight"><pre><code class="python"><span class="lineno"> 1</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="lineno"> 2</span> <span class="n">aid</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="lineno"> 3</span> 
+<span class="lineno"> 4</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50000</span><span class="p">):</span>
+<span class="lineno"> 5</span>     <span class="n">a</span> <span class="o">+=</span> <span class="s">&#39;a&#39;</span>
+<span class="lineno"> 6</span>     <span class="n">aid_2</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="lineno"> 7</span> 
+<span class="lineno"> 8</span>     <span class="k">if</span> <span class="n">aid_2</span> <span class="o">!=</span> <span class="n">aid</span><span class="p">:</span>
+<span class="lineno"> 9</span>         <span class="k">print</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="lineno">10</span>         <span class="n">aid</span> <span class="o">=</span> <span class="n">aid_2</span>
+</code></pre></div>
+
+<p>输出结果：</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">1
+2
+4
+12
+20
+28
+36
+44
+52
+60
+68
+76
+84
+92
+100
+108
+116
+124
+132
+140
+148
+156
+164
+172
+180
+188
+196
+204
+212
+220
+236
+284
+636
+652
+668
+684
+972
+988
+2012
+2524
+4572
+36316
+36828
+37340
+37852
+38364
+</code></pre></div>
+</div>
+
+
+          <!--<div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>-->
+
+    </body>
+</html>
