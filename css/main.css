@@ -97,6 +97,11 @@ a:visited { color: #08a; }
 
 .meta {
   color: #aaa;
+  font-size: 10px;
+}
+
+.post-title {
+    font-weight: bold;
 }
 
 .footer {
