@@ -253,7 +253,3 @@ a:visited { color: #08a; }
 #ds-thread #ds-reset .ds-powered-by {
   display: none;
 }
-
-#ds-thread #ds-reset .ds-comments-tabs li.ds-tab {
-  display: none;
-}
