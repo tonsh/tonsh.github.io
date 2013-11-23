@@ -59,8 +59,12 @@ a:visited { color: #a0a; }
   font-size: 115%;
   text-align: justify;
   width: 42em;
-  margin: 3em auto 2em;
+  margin: 20px auto;
   line-height: 1.5em;
+}
+
+.header {
+  border-bottom: 1px solid #ccc;
 }
 
 .header a {
@@ -70,15 +74,16 @@ a:visited { color: #a0a; }
 
 .title {
   display: inline-block;
-  margin-bottom: 2em;
+  margin-bottom: 20px;
+  font-size: 30px;
 }
 
 .title a {
-  color: #a00;
+  color: #000;
 }
 
 .title a:hover {
-  color: #000;
+  color: #a00;
 }
 
 .header a.extra {
