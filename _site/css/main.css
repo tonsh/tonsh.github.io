@@ -100,11 +100,9 @@ a:visited { color: #a0a; }
 }
 
 .footer {
-  font-size: 80%;
-  color: #666;
-  border-top: 4px solid #eee;
-  margin-top: 2em;
-  overflow: hidden;
+  border-top: 1px solid #ccc;
+  margin-top: 20px;
+  font-size: 10px;
 }
 
 .footer .contact {
@@ -183,4 +181,8 @@ a:visited { color: #a0a; }
   color: #468847;
   border-radius: 4px;
   margin-bottom: 20px;
+}
+
+#ds-thread #ds-reset .ds-powered-by {
+  display: none;
 }
