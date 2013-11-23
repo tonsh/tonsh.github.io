@@ -1,53 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{{ page.title }}</title>
-        <meta name="viewport" content="width=device-width">
+---
+layout: base
+---
 
-        <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+<div class="header">
+  <h1 class="title"><a href="/">{{ site.name }}</a></h1>
+</div>
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+{% include nav.html %}
 
-    </head>
-    <body>
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">{{ site.name }}</a></h1>
-          </div>
-
-          <div class="nav">
-            <div class="nav-block">
-                <a class="item" href="/">Home</a>
-                <a class="item" href="/about">About</a>
-            </div>
-            <!--<div class="thumbnail">
-              <img src="http://www.gravatar.com/avatar/646c598aa4ec20a5867186be4a7a9e21?s=200">
-            </div>
-            <div class="ucard">
-              <span class="glyphicon glyphicon-envelope"> tonshlee#gmail.com</span>
-            </div>-->
-          </div>
-
-          {{ content }}
-
-          <div class="footer">
-            <div class="container">
-              <p class="text-muted credit">
-                Power by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> & <a href="https://github.com" target="_blank">GitHub</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Copyright &copy; {{ site.time | date: "%Y" }} by tonsh
-              </p>
-            </div>
-          </div>
-            <!--<div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>-->
-        </div>
-    </body>
-</html>
+{{ content }}

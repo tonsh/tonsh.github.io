@@ -165,11 +165,27 @@ a:visited { color: #a00; }
   border-color: #000;
 }
 
+
+/*****************************************************************************/
+/*
+/* About me
+/*
+/*****************************************************************************/
 .ucard {
   list-style: none outside none;
   margin: 10px auto;
-  padding: 10px 0;
+  padding: 10px 0 10px 20px;
+  font-size: 20px;
 }
+
+.ucard li {
+    margin-bottom: 20px;
+}
+
+.ucard .name {
+    font-weight: bold;
+}
+
 /*****************************************************************************/
 /*
 /* Posts
