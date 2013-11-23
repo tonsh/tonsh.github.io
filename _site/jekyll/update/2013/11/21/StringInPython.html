@@ -26,45 +26,32 @@
 <p class="meta">21 Nov 2013</p>
 
 <div class="post">
-<p>在 python 里字符串是被当作不可变变量处理的。</p>
+<p>字符串类型是 Python 的内置类型，Python 中字符串的赋值过程发生过哪些事情？</p>
 
 <div class="highlight"><pre><code class="bash">&gt;&gt;&gt; <span class="nv">a</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
 &gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> a
-&gt;&gt;&gt; <span class="nv">a</span> <span class="o">==</span> b
+&gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
+4464547200
+&gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> a
+&gt;&gt;&gt; id<span class="o">(</span>b<span class="o">)</span>
+4464547200
+&gt;&gt;&gt; a is b
 True
 &gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+&gt;&gt;&gt; id<span class="o">(</span>b<span class="o">)</span>
+4464546880
+&gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
+4464547200
 &gt;&gt;&gt; a
 a
 &gt;&gt;&gt; b
 b
 </code></pre></div>
 
-<p>说明 Python 没有把字符串赋值当作引用传递处理。</p>
+<p>当变量 b 初次赋值时，并没有立即分配内存，而是与 a 指向了相同的内存空间；<br/>
+若 a 或 b 任意一个值改变时, 被改变的变量指向的内存空间会变化；</p>
 
-<p>继续研究以下代码，查看字符串赋值过程中，变量标识是如何变化的：</p>
-
-<h5>当变量b初次赋值时，与 a 指向相同的内存空间。</h5>
-
-<div class="highlight"><pre><code class="bash">&gt;&gt;&gt; <span class="nv">a</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
-&gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
-4464547200
-&gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> a
-&gt;&gt;&gt; id<span class="o">(</span>b<span class="o">)</span>
-4464547200
-</code></pre></div>
-
-<h5>若 a或b 任意一个值改变时, 被改变的变量指向的内存空间会变化。</h5>
-
-<div class="highlight"><pre><code class="bash">&gt;&gt;&gt; <span class="nv">a</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
-&gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> a
-&gt;&gt;&gt; <span class="nv">b</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
-&gt;&gt;&gt; id<span class="o">(</span>b<span class="o">)</span>
-4464546880
-&gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
-4464547200
-</code></pre></div>
-
-<h5>如果增加字符串的长度？</h5>
+<p>如果增加字符串的长度呢？</p>
 
 <div class="highlight"><pre><code class="bash">&gt;&gt;&gt; <span class="nv">a</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
 &gt;&gt;&gt; id<span class="o">(</span>a<span class="o">)</span>
@@ -77,7 +64,7 @@ b
 4465546784
 </code></pre></div>
 
-<p>神奇的事情发生了，第一次修改字符串 a 时，理论上应该只申请两个字符的空间，但是Python会额外多分配几个字符（大于2个字符），所以之后的继续增加a的长度，a指向的地址并没有变化，直到分配的空间占满后，a 的地址才会变化，下面给些具体的数值，大家感受一下：</p>
+<p>第一次修改字符串 a 时，a 的长度加 1，理论上应该多分配 1 个字符的空间，但是Python会额外多分配的空间比实际需要的要多（公式换算），如果之后继续增加a的长度，a 指向的地址并没有变化，直到首次分配的空间占满后，a 的地址才会变化，下面给些数据，大家感受一下：</p>
 
 <div class="highlight"><pre><code class="python"><span class="lineno"> 1</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
 <span class="lineno"> 2</span> <span class="n">aid</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
