@@ -73,6 +73,7 @@ for i in range(0, 50000):
     if aid_2 != aid:
         print i + 1
         aid = aid_2
+
 {% endhighlight %}
 
 输出结果：
