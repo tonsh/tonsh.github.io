@@ -26,8 +26,8 @@ h1 { margin-bottom: 1em; }
 p { margin: 1em 0; }
 
 a         { color: #08a; }
-a:hover   { color: #a00; }
-a:visited { color: #a00; }
+a:hover   { color: #08a; }
+a:visited { color: #08a; }
 
 /*****************************************************************************/
 /*
