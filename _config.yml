@@ -1,3 +1,5 @@
 name: Tonsh's Blog
+description: Tonsh's technology blog!
+url: http://tonsh.github.io
 markdown: redcarpet
 pygments: true

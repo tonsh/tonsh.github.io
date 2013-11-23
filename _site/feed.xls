@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Tonsh's Blog</title>
+        <description>Tonsh's technology blog!</description>
+        <link>http://tonsh.github.io</link>
+        <atom:link href="http://tonsh.github.io/feed.xml" rel="self" type="application/rss+xml" />
+        
+            <item>
+                <title>bash 下进行 md5 加密与 python 的 md5 结果不同?</title>
+                <description>&lt;p&gt;在命令行下进行 md5 加密：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; echo &amp;#39;tonshlee@gmail.com&amp;#39; | md5sum
+
+4df6140c29b5dbfb8745a3e06e2d682b
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;而使用 python 对同样的字符串加密结果却不同：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; import hashlib
+&amp;gt;&amp;gt;&amp;gt; hashlib.md5(&amp;#39;tonshlee@gmail.com&amp;#39;).hexdigest()
+
+646c598aa4ec20a5867186be4a7a9e21    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; man echo
+
+The echo utility writes any specified operands, separated by single blank characters and followed by a newline (`\n&amp;#39;) character, to the stan-dard output.
+    … …
+-n    Do not print the trailing newline character.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;命令行 &amp;#39;echo&amp;#39; 会自动在字符串参数结尾添加 &amp;#39;\n&amp;#39; 回车符。-n 参数不会打印回车符&lt;/p&gt;
+
+&lt;p&gt;所以bash下应该：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;&amp;gt;&amp;gt;&amp;gt; echo -n &amp;#39;tonshlee@gmail.com&amp;#39; | md5sum
+646c598aa4ec20a5867186be4a7a9e21
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+                <pubDate>Thu, 21 Nov 2013 18:09:33 +0000</pubDate>
+                <link>http://tonsh.github.io//jekyll/update/2013/11/21/md5sum.html</link>
+                <guid isPermaLink="true">http://tonsh.github.io//jekyll/update/2013/11/21/md5sum.html</guid>
+            </item>
+        
+            <item>
+                <title>Python 里的字符串赋值</title>
+                <description>&lt;p&gt;字符串类型是 Python 的内置类型，Python 中字符串的赋值过程发生过哪些事情？&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; a
+&amp;gt;&amp;gt;&amp;gt; id&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;a&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+4464547200
+&amp;gt;&amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; a
+&amp;gt;&amp;gt;&amp;gt; id&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;b&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+4464547200
+&amp;gt;&amp;gt;&amp;gt; a is b
+True
+&amp;gt;&amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;b&amp;#39;&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; id&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;b&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+4464546880
+&amp;gt;&amp;gt;&amp;gt; id&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;a&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+4464547200
+&amp;gt;&amp;gt;&amp;gt; a
+a
+&amp;gt;&amp;gt;&amp;gt; b
+b
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;当变量 b 初次赋值时，并没有立即分配内存，而是与 a 指向了相同的内存空间；&lt;br/&gt;
+若 a 或 b 任意一个值改变时, 被改变的变量指向的内存空间会变化；&lt;/p&gt;
+
+&lt;p&gt;如果增加字符串的长度呢？&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&amp;gt;&amp;gt;&amp;gt; &lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; id&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;a&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+4464547200
+&amp;gt;&amp;gt;&amp;gt; a +&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;b&amp;#39;&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; id&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;a&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+4465546784
+&amp;gt;&amp;gt;&amp;gt; a +&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;c&amp;#39;&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; id&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;a&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+4465546784
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;第一次修改字符串 a 时，a 的长度加 1，理论上应该多分配 1 个字符的空间，但是Python会额外多分配的空间比实际需要的要多（公式换算），如果之后继续增加a的长度，a 指向的地址并没有变化，直到首次分配的空间占满后，a 的地址才会变化，下面给些数据，大家感受一下：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;aid_2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aid_2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;aid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aid_2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;输出结果：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;1
+2
+4
+12
+20
+28
+36
+44
+52
+60
+68
+76
+84
+92
+100
+108
+116
+124
+132
+140
+148
+156
+164
+172
+180
+188
+196
+204
+212
+220
+236
+284
+636
+652
+668
+684
+972
+988
+2012
+2524
+4572
+36316
+36828
+37340
+37852
+38364
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+                <pubDate>Thu, 21 Nov 2013 12:09:33 +0000</pubDate>
+                <link>http://tonsh.github.io//jekyll/update/2013/11/21/StringInPython.html</link>
+                <guid isPermaLink="true">http://tonsh.github.io//jekyll/update/2013/11/21/StringInPython.html</guid>
+            </item>
+        
+    </channel>
+</rss>
