@@ -53,7 +53,7 @@
 .mo { color: #cd00cd } /* Literal.Number.Oct */
 .sb { color: #cd0000 } /* Literal.String.Backtick */
 .sc { color: #cd0000 } /* Literal.String.Char */
-.sd { color: #cd0000 } /* Literal.String.Doc */
+.sd { color: #008800 } /* Literal.String.Doc */
 .s2 { color: #cd0000 } /* Literal.String.Double */
 .se { color: #cd0000 } /* Literal.String.Escape */
 .sh { color: #cd0000 } /* Literal.String.Heredoc */
