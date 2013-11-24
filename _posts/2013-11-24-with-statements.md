@@ -43,7 +43,7 @@ finally:
 注：
 open() returns a file object whose type depends on the mode, … … in read binary mode, it returns a **BufferedReader**; in write binary and append binary modes, it returns a **BufferedWriter**, and in read/write mode, it returns a **BufferedRandom.**
 
-Python 的内置方法 open() 会根据第二个参数 mode 返回不同的文件对象. 如 mode='r', 则返回 BufferedWriter 类。
+Python 的内置方法 open() 会根据第二个参数 mode 返回不同的文件对象. 如 mode='r', 则返回 BufferedReader 类。
 ```
 
 Python-2.7.4/Lib/_pyio.py  代码顺序做了调整
