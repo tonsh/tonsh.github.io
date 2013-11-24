@@ -102,7 +102,7 @@ Python 的内置方法 open() 会根据第二个参数 mode 返回不同的文�
 
 &lt;p&gt;到这里我们知道了一般在需要 try ... finally ... 的时候会选择使用 with 声明； with 声明的对象类必须实现 &lt;code&gt;__enter__&lt;/code&gt;, &lt;code&gt;__exit__&lt;/code&gt; 两个方法; &lt;/p&gt;
 
-&lt;p&gt;想到一个好恶心的例子，曾经有人大喊，上完厕所要冲厕! 那么我们实现一个高端大气上档次的自动冲厕功能好了 &amp;gt;_&amp;lt;！［大汗］&lt;/p&gt;
+&lt;p&gt;想到一个例子，公司厕所里贴着: &amp;quot;上完厕所要冲厕!&amp;quot; 的标语。 那么我们实现一个高端大气上档次的自动冲厕功能好了 &amp;gt;_&amp;lt;！［大汗］&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AutoFlushing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;c&quot;&gt;# 厕所初始情况下是干净的&lt;/span&gt;

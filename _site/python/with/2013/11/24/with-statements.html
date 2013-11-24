@@ -130,7 +130,7 @@ Python 的内置方法 open() 会根据第二个参数 mode 返回不同的文�
 
 <p>到这里我们知道了一般在需要 try ... finally ... 的时候会选择使用 with 声明； with 声明的对象类必须实现 <code>__enter__</code>, <code>__exit__</code> 两个方法; </p>
 
-<p>想到一个好恶心的例子，曾经有人大喊，上完厕所要冲厕! 那么我们实现一个高端大气上档次的自动冲厕功能好了 &gt;_&lt;！［大汗］</p>
+<p>想到一个例子，公司厕所里贴着: &quot;上完厕所要冲厕!&quot; 的标语。 那么我们实现一个高端大气上档次的自动冲厕功能好了 &gt;_&lt;！［大汗］</p>
 
 <div class="highlight"><pre><code class="python"><span class="k">class</span> <span class="nc">AutoFlushing</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="c"># 厕所初始情况下是干净的</span>
