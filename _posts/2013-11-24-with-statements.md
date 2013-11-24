@@ -11,7 +11,7 @@ with open('demo.txt', 'r') as f:
 		print line
 {% endhighlight %}
 
-这段代码实现了打印目标文档的内容。 这里的 with 声明等价于：
+以上代码实现了打印目标文档的内容。 这里的 with 声明等价于：
 
 {% highlight python %}
 f = open('demo.txt', 'r)
@@ -37,13 +37,13 @@ finally:
 
 一个对象如果想使用 with 声明，对象类必须实现 `__enter__`, `__exit__` 两个魔术方法。跟在 with 后的对象初始化后，会调用 `__enter__` 方法。
 
-我们来看看 BufferedReader 的 Python 源代码是如何实现处理这两个魔术方法的。
+我们来看看 BufferedReader 的 Python 源代码是如何实现这两个魔术方法的。
 
 ``` 
 注：
 open() returns a file object whose type depends on the mode, … … in read binary mode, it returns a **BufferedReader**; in write binary and append binary modes, it returns a **BufferedWriter**, and in read/write mode, it returns a **BufferedRandom.**
 
-Python 的内置方法 Open() 会根据第二个参数 mode 返回不同的文件对象. 如 mode='r', 则返回 BufferedWriter 类。
+Python 的内置方法 open() 会根据第二个参数 mode 返回不同的文件对象. 如 mode='r', 则返回 BufferedWriter 类。
 ```
 
 Python-2.7.4/Lib/_pyio.py  代码顺序做了调整
@@ -106,7 +106,7 @@ with open('demo.txt', 'r') as f, 文件对象 f 一旦创建，就会执行 f.`_
 
 到这里我们知道了一般在需要 try ... finally ... 的时候会选择使用 with 声明； with 声明的对象类必须实现 `__enter__`, `__exit__` 两个方法; 
 
-想到一个好恶心的例子，曾经有人大喊，上完厕所要冲厕! 那么我们实现一个高端大气上档次的自动冲厕的功能好了 >_<！［大汗］
+想到一个好恶心的例子，曾经有人大喊，上完厕所要冲厕! 那么我们实现一个高端大气上档次的自动冲厕功能好了 >_<！［大汗］
 
 {% highlight python lineno %}
 class AutoFlushing(object):
@@ -127,7 +127,7 @@ class AutoFlushing(object):
 	def __exit__(self):
 		self.flush()
 		
-# 小明来上厕所，会自动冲水
+# 小萌来上厕所，会自动冲水的哦！
 with AutoFlushing() as fl:
 	fl.have_a_piss()
 {% endhighlight %}

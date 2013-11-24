@@ -13,7 +13,7 @@
         &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;这段代码实现了打印目标文档的内容。 这里的 with 声明等价于：&lt;/p&gt;
+&lt;p&gt;以上代码实现了打印目标文档的内容。 这里的 with 声明等价于：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;demo.txt&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;r)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readlines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
@@ -37,11 +37,11 @@
 
 &lt;p&gt;一个对象如果想使用 with 声明，对象类必须实现 &lt;code&gt;__enter__&lt;/code&gt;, &lt;code&gt;__exit__&lt;/code&gt; 两个魔术方法。跟在 with 后的对象初始化后，会调用 &lt;code&gt;__enter__&lt;/code&gt; 方法。&lt;/p&gt;
 
-&lt;p&gt;我们来看看 BufferedReader 的 Python 源代码是如何实现处理这两个魔术方法的。&lt;/p&gt;
+&lt;p&gt;我们来看看 BufferedReader 的 Python 源代码是如何实现这两个魔术方法的。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;注：
 open() returns a file object whose type depends on the mode, … … in read binary mode, it returns a **BufferedReader**; in write binary and append binary modes, it returns a **BufferedWriter**, and in read/write mode, it returns a **BufferedRandom.**
 
-Python 的内置方法 Open() 会根据第二个参数 mode 返回不同的文件对象. 如 mode=&amp;#39;r&amp;#39;, 则返回 BufferedWriter 类。
+Python 的内置方法 open() 会根据第二个参数 mode 返回不同的文件对象. 如 mode=&amp;#39;r&amp;#39;, 则返回 BufferedWriter 类。
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Python-2.7.4/Lib/_pyio.py  代码顺序做了调整&lt;/p&gt;
 
@@ -102,7 +102,7 @@ Python 的内置方法 Open() 会根据第二个参数 mode 返回不同的文�
 
 &lt;p&gt;到这里我们知道了一般在需要 try ... finally ... 的时候会选择使用 with 声明； with 声明的对象类必须实现 &lt;code&gt;__enter__&lt;/code&gt;, &lt;code&gt;__exit__&lt;/code&gt; 两个方法; &lt;/p&gt;
 
-&lt;p&gt;想到一个好恶心的例子，曾经有人大喊，上完厕所要冲厕! 那么我们实现一个高端大气上档次的自动冲厕的功能好了 &amp;gt;_&amp;lt;！［大汗］&lt;/p&gt;
+&lt;p&gt;想到一个好恶心的例子，曾经有人大喊，上完厕所要冲厕! 那么我们实现一个高端大气上档次的自动冲厕功能好了 &amp;gt;_&amp;lt;！［大汗］&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AutoFlushing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;c&quot;&gt;# 厕所初始情况下是干净的&lt;/span&gt;
@@ -122,7 +122,7 @@ Python 的内置方法 Open() 会根据第二个参数 mode 返回不同的文�
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__exit__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
         &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
         
-&lt;span class=&quot;c&quot;&gt;# 小明来上厕所，会自动冲水&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 小萌来上厕所，会自动冲水的哦！&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AutoFlushing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;fl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;have_a_piss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;

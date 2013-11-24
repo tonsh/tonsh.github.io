@@ -41,7 +41,7 @@
         <span class="k">print</span> <span class="n">line</span>
 </code></pre></div>
 
-<p>这段代码实现了打印目标文档的内容。 这里的 with 声明等价于：</p>
+<p>以上代码实现了打印目标文档的内容。 这里的 with 声明等价于：</p>
 
 <div class="highlight"><pre><code class="python"><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;demo.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r)</span>
 <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
@@ -65,11 +65,11 @@
 
 <p>一个对象如果想使用 with 声明，对象类必须实现 <code>__enter__</code>, <code>__exit__</code> 两个魔术方法。跟在 with 后的对象初始化后，会调用 <code>__enter__</code> 方法。</p>
 
-<p>我们来看看 BufferedReader 的 Python 源代码是如何实现处理这两个魔术方法的。</p>
+<p>我们来看看 BufferedReader 的 Python 源代码是如何实现这两个魔术方法的。</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">注：
 open() returns a file object whose type depends on the mode, … … in read binary mode, it returns a **BufferedReader**; in write binary and append binary modes, it returns a **BufferedWriter**, and in read/write mode, it returns a **BufferedRandom.**
 
-Python 的内置方法 Open() 会根据第二个参数 mode 返回不同的文件对象. 如 mode=&#39;r&#39;, 则返回 BufferedWriter 类。
+Python 的内置方法 open() 会根据第二个参数 mode 返回不同的文件对象. 如 mode=&#39;r&#39;, 则返回 BufferedWriter 类。
 </code></pre></div>
 <p>Python-2.7.4/Lib/_pyio.py  代码顺序做了调整</p>
 
@@ -130,7 +130,7 @@ Python 的内置方法 Open() 会根据第二个参数 mode 返回不同的文�
 
 <p>到这里我们知道了一般在需要 try ... finally ... 的时候会选择使用 with 声明； with 声明的对象类必须实现 <code>__enter__</code>, <code>__exit__</code> 两个方法; </p>
 
-<p>想到一个好恶心的例子，曾经有人大喊，上完厕所要冲厕! 那么我们实现一个高端大气上档次的自动冲厕的功能好了 &gt;_&lt;！［大汗］</p>
+<p>想到一个好恶心的例子，曾经有人大喊，上完厕所要冲厕! 那么我们实现一个高端大气上档次的自动冲厕功能好了 &gt;_&lt;！［大汗］</p>
 
 <div class="highlight"><pre><code class="python"><span class="k">class</span> <span class="nc">AutoFlushing</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="c"># 厕所初始情况下是干净的</span>
@@ -150,7 +150,7 @@ Python 的内置方法 Open() 会根据第二个参数 mode 返回不同的文�
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
         
-<span class="c"># 小明来上厕所，会自动冲水</span>
+<span class="c"># 小萌来上厕所，会自动冲水的哦！</span>
 <span class="k">with</span> <span class="n">AutoFlushing</span><span class="p">()</span> <span class="k">as</span> <span class="n">fl</span><span class="p">:</span>
     <span class="n">fl</span><span class="o">.</span><span class="n">have_a_piss</span><span class="p">()</span>
 </code></pre></div>
