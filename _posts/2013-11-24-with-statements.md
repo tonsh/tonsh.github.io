@@ -124,7 +124,7 @@ class AutoFlushing(object):
 	def __enter__(self):
 		self._flushed = False
 		
-	def __exit__(self):
+	def __exit__(self, *args):
 		self.flush()
 		
 # 小萌来上厕所，会自动冲水的哦！
