@@ -7,7 +7,7 @@
         <atom:link href="http://tonsh.github.io/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
-                <title>在项目中使用日志</title>
+                <title>Python 的日志模块</title>
                 <description>&lt;p&gt;平时调试程序时习惯使用 print 打印调试信息，通过之后再把它们删掉。如:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;server start ...&amp;#39;&lt;/span&gt;

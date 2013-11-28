@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 在项目中使用日志
+title: Python 的日志模块
 date:   2013-11-27 23:50:33
 categories: python logging
 ---
