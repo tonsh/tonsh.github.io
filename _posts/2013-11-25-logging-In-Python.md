@@ -116,26 +116,26 @@ except ZeroDivisionError, e:
 
 <b>记录异常</b>
 
-当程序抛出异常时，我们更希望将所有的异常信息写进日志，方便查看具体的出错信息。这时可以设置 logger 的 error / warning / info /debug 的 exc_info 参数为 True, logger 将会记录完整的异常信息。
+当程序抛出异常时，我们更希望将所有的异常信息写进日志，方便查看具体的出错信息。这时可以设置 logger 的 exc_info 参数为 True, logger 将会记录完整的异常信息。
 
 {% highlight python %}
 try:
     a = 1 / 0
 except Exception, e:
-    logger.error('Error: ', exc_info=True)
+    logger.error('have a exception: ', exc_info=True)
 {% endhighlight %}
 
 输入如下:
 
 ```
-2013-11-27 20:23:42,092 __main__ ERROR exception:
+2013-11-27 20:23:42,092 __main__ ERROR have a exception:
 Traceback (most recent call last):
-  File "main.py", line 26, in <module>
+  File "mylog.py", line 26, in <module>
     a = 1 / 0
 ZeroDivisionError: integer division or modulo by zero 
 ```
 
-<b>旋转日志文件 (Rotating file handler)</b>
+<b>切分日志文件 (Rotating file handler)</b>
 
 使用 FileHandler 写日志，日志文件会一直增长下去。也许某天它会占满你的磁盘。为了避免这种情况，建议使用 RotatingFileHandler 代替 FileHandler。
 
@@ -165,5 +165,99 @@ for i in range(10):
 以上的例子都是使用 `__name__` 作为 logger 的 name 参数。Python 的 `__name__` 是当前包的名字。在foo.bar.mylog文件里调用logging.getLogger(`__name__`)等价于logging.getLogger('foo.bar.mylog'), logger 的名字很类似于 Python 的包名。"foo.bar.mylog", "foo.bar" 都是 "foo" 的子级，子级会继承父级的配置。
 
 <b>logger 的配置文件</b>
-太困了，明天继续 ...
 
+截至到这里，我们都是在程序中直接对 logger 进行配置，其实配置 logger 最好使用logging.config。配置可以是字典，由 dictConfig 解析, 也可以是文件，由 fileConfig 解析，fileConfig 基于 ConfigParser 格式。配置文件必须包含 loggers, heandlers, formatters 三个部分。<a href="http://docs.python.org/2/library/logging.config.html" target="_blank">详见参考手册</a>
+
+假设在 logger 部分定义了一个个名为 "foo" 的logger, 那么就要同时定义一个名为 [logger_foo]的部分；`[handler], [handler_foo], [formatter], [formatter_foo]` 也都要有对 foo 的定义。下面以三个名为 "root", "foo", "bar" 的 logger 为例,这里需要了解 root 是 logger 的默认名字。root 会输出到终端, foo 输出到文件，bar 输出到切分文件，它们的输出格式，日志级别等可以不同:
+
+logging.conf
+
+```
+[loggers]
+keys = root, foo, bar
+
+[handlers]
+keys = root, foo, bar
+
+[formatters]
+keys = root, foo, bar
+
+[logger_root]
+level=DEBUG
+handlers=root
+
+[logger_foo]
+level=DEBUG
+handlers=FileHandler
+qualname=foo
+propagate=0
+
+[logger_bar]
+level=DEBUG
+handlers=RotatingFileHandler
+qualname=bar
+propagate=0
+
+[handler_root]
+class=StreamHandler
+level=INFO
+formatter=root
+args=(sys.stdout,)
+
+[handler_foo]
+class=FileHandler
+level=WARNING
+formatter=foo
+args=('foo.log', 'a')
+
+[handler_bar]
+class=handlers.RotatingFileHandler
+level=DEBUG
+formatter=bar
+args=('bar.log', 'a', 20, 9)
+
+[formatter_root]
+format=simpleFormatter
+datefmt=
+
+[formatter_foo]
+format=%(asctime)s %(name)s %(levelname)s %(message)s
+datefmt=%Y-%m-%d %H-%M-%S
+class=logging.Formatter
+
+[formatter_bar]
+format=%(asctime)s %(name)s %(levelname)s %(message)s
+datefmt=%Y-%m-%d %H-%M-%S
+class=logging.Formatter
+```
+
+{% highlight python %}
+import logging
+import logging.config
+
+logging.config.fileConfig('cfg.ini') 
+ 
+logger = logging.getLogger() 
+logger_foo = logging.getLogger('foo') 
+logger_bar = logging.getLogger('bar') 
+ 
+for i in range(20): 
+    logger.info('num: %s', i) 
+    logger_foo.error('num: %s', i) 
+    logger_bar.info('num: %s', i) 
+{% endhighlight %}
+
+这里需要注意的是加载配置信息时，之前创建的 logger 会失效。
+
+{% highlight python %}
+import logging
+import logging.config
+
+logger_foo = logging.getLogger(__name__)
+
+# logger_foo 被创建之后加载了配置信息
+logging.config.dictConfig(dict_config)
+
+logger.INFO('logger is not work!')
+{% endhighlight %}
+最好的做法时在需要 logger 的时候才去获取。
