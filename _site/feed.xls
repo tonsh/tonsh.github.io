@@ -7,6 +7,60 @@
         <atom:link href="http://tonsh.github.io/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+                <title>Mysql 同步备份方案</title>
+                <description>&lt;pre class=&quot;reference&quot;&gt;
+这是一篇以前在自己博客写的旧文章，最近考虑要不要关闭以前的博客(好久没被更新过了 &gt;_&lt;)。 所以挑了一篇想留下的搬过来。
+&lt;/pre&gt;
+
+&lt;p&gt;应用程序上线后,不得不考虑的一个问题便是数据库备份及实现生成环境与开发环境的数据库同步。下面是我想到的一个解决方案：开发环境每天凌晨 3 点触发线上的 Mysql 备份脚本，然后将线上的备份文件拷贝到本地,并导入开发 Mysql 数据库。&lt;/p&gt;
+
+&lt;p&gt;线上的备份脚本 /home/youremote/shell/mysql_make_backup.sh&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;date + %Y%m%d&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/youremote/mysqlbk
+&lt;span class=&quot;nv&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/mysqlbk.&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;.sql.bz2
+ 
+mysqldump --add-drop-table -u username -ppassword databasename &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; bzip2 &amp;gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+ 
+&lt;span class=&quot;c&quot;&gt;#删除7天前的备份文件&lt;/span&gt;
+find &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; -mtime +7 -exec rm -f &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;开发环境下的定时脚本 /home/yourlocal/shell/mysql_make_import.sh&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+ 
+&lt;span class=&quot;nv&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;date + %Y%m%d&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;mysqlbk.&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;.sql.bz2
+&lt;span class=&quot;nv&quot;&gt;remoteFile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/youremote/mysqlbk/&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;localdir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/yourlocal/import
+ 
+&lt;span class=&quot;c&quot;&gt;#运行线上的备份脚本&lt;/span&gt;
+ssh tonsh@tonsh.net /home/youremote/shell/mysql_make_backup.sh
+&lt;span class=&quot;c&quot;&gt;#将备份文件拷贝到本地&lt;/span&gt;
+scp tonsh@tonsh.net:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;remoteFile&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;localdir&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#更新本地 mysql&lt;/span&gt;
+bunzip2 &amp;lt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;localdir&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; mysql -uusername -ppassword databasename
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;加入定时任务，新建文件cronfile（或 crontab -e), 加入一下内容：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;0 3 * * * /home/yourlocal/shell/mysql_make_import.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;运行 crontab&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;crontab cronfile
+crontab -l
+    0 3 * * * /home/yourlocal/shell/mysql_make_import.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;定时任务每天凌晨3点会触发开发环境的 shell 脚本 mysql_make_import.sh, 该脚本先触发远程服务器(生成环境) Mysql 备份脚本; 然后将远程服务器的备份文件通过 scp 保存至本地(开发环境); 最后将保存后的备份文件导入开发数据库。&lt;/p&gt;
+
+&lt;p&gt;这样既保证了生成环境 Mysql 数据库的备份，也能使开发环境数据同步。当然，如果开发环境没必要与生成环境数据同步，可省去数据导入的步骤。&lt;/p&gt;
+</description>
+                <pubDate>Thu, 28 Nov 2013 23:50:33 +0000</pubDate>
+                <link>http://tonsh.github.io//mysql/backup/2013/11/28/mysql-backup.html</link>
+                <guid isPermaLink="true">http://tonsh.github.io//mysql/backup/2013/11/28/mysql-backup.html</guid>
+            </item>
+        
+            <item>
                 <title>Python 的日志模块</title>
                 <description>&lt;p&gt;平时调试程序时习惯使用 print 打印调试信息，通过之后再把它们删掉。如:&lt;/p&gt;
 
