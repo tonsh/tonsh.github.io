@@ -43,7 +43,7 @@ logger.debug('This is a debug message !')
 2013-11-27 18:48:42,591 __main__ ERROR This is a error message !! 
 ```
 
-basicConfig 可以配置日志的输出格式，日志级别，目标输出流等等。日志级别可参考<a href="http://docs.python.org/2/library/logging.html" target="_blank">手册</a>, 低于日志级别的消息将被忽略。如将上例中的日志级别改为 logging.EBUG，输出结果如下：
+basicConfig 可以配置日志的输出格式，日志级别，目标输出流等等。日志级别可参考<a href="http://docs.python.org/2/library/logging.html" target="_blank">Python 文档</a>, 低于日志级别的消息将被忽略。如将上例中的日志级别改为 logging.EBUG，输出结果如下：
 
 ```
 2013-11-27 18:49:43,659 __main__ ERROR This is a error message !!
@@ -52,7 +52,7 @@ basicConfig 可以配置日志的输出格式，日志级别，目标输出流�
 2013-11-27 18:49:43,658 __main__ DEBUG This is a debug message !
 ```
 
-logger 默认将日志内容输出到终端。还可以输出到文件，发送到邮箱或远程服务器等，这里不做详细介绍，可以参考<a href="http://docs.python.org/2/library/logging.handlers.html#module-logging.handlers" target="_blank">Python 手册</a>。下面以文件为例:
+logger 默认将日志内容输出到终端。还可以输出到文件，发送到邮箱或远程服务器等，这里不做详细介绍，可以参考<a href="http://docs.python.org/2/library/logging.handlers.html#module-logging.handlers" target="_blank">Python 文档</a>。下面以文件为例:
 
 {% highlight python %}
 import logging
@@ -115,7 +115,7 @@ error: 当遇到错误时
 {% highlight python %}
 try:
     a = 1 / 0
-except ZeroDivisionError, e:
+except ZeroDivisionError as e:
     logger.error(e.message)
 {% endhighlight %}
 
@@ -127,7 +127,7 @@ except ZeroDivisionError, e:
 {% highlight python %}
 try:
     a = 1 / 0
-except Exception, e:
+except Exception as e:
     logger.error('have a exception: ', exc_info=True)
 {% endhighlight %}
 
@@ -268,3 +268,13 @@ logger.INFO('logger is not work!')
 {% endhighlight %}
 
 最好的做法是在需要 logger 的时候才去获取。
+
+<pre class="reference">
+参考资料:
+
+    <a href="http://victorlin.me/posts/2012/08/26/good-logging-practice-in-python" target="_blank">Good logging practice in Python</a>
+    <a href="http://docs.python.org/2/library/logging.html" target="_blank">logging</a>
+    <a href="http://docs.python.org/2/library/logging.handlers.html" target="_blank">logging.handlers</a>
+    <a href="http://docs.python.org/2/library/logging.config.html" target="_blank">logging.config</a>
+   《Python 标准库》712P
+</pre>

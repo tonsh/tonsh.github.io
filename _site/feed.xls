@@ -40,13 +40,13 @@
 &lt;p&gt;输出结果如下:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;2013-11-27 18:48:42,591 __main__ ERROR This is a error message !! 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;basicConfig 可以配置日志的输出格式，日志级别，目标输出流等等。日志级别可参考&lt;a href=&quot;http://docs.python.org/2/library/logging.html&quot; target=&quot;_blank&quot;&gt;手册&lt;/a&gt;, 低于日志级别的消息将被忽略。如将上例中的日志级别改为 logging.EBUG，输出结果如下：&lt;/p&gt;
+&lt;p&gt;basicConfig 可以配置日志的输出格式，日志级别，目标输出流等等。日志级别可参考&lt;a href=&quot;http://docs.python.org/2/library/logging.html&quot; target=&quot;_blank&quot;&gt;Python 文档&lt;/a&gt;, 低于日志级别的消息将被忽略。如将上例中的日志级别改为 logging.EBUG，输出结果如下：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;2013-11-27 18:49:43,659 __main__ ERROR This is a error message !!
 2013-11-27 18:49:43,658 __main__ WARNING This is a Warning message!
 2013-11-27 18:49:43,658 __main__ INFO This is an info message!
 2013-11-27 18:49:43,658 __main__ DEBUG This is a debug message !
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;logger 默认将日志内容输出到终端。还可以输出到文件，发送到邮箱或远程服务器等，这里不做详细介绍，可以参考&lt;a href=&quot;http://docs.python.org/2/library/logging.handlers.html#module-logging.handlers&quot; target=&quot;_blank&quot;&gt;Python 手册&lt;/a&gt;。下面以文件为例:&lt;/p&gt;
+&lt;p&gt;logger 默认将日志内容输出到终端。还可以输出到文件，发送到邮箱或远程服务器等，这里不做详细介绍，可以参考&lt;a href=&quot;http://docs.python.org/2/library/logging.handlers.html#module-logging.handlers&quot; target=&quot;_blank&quot;&gt;Python 文档&lt;/a&gt;。下面以文件为例:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;logging&lt;/span&gt;
 
@@ -101,7 +101,7 @@
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;ne&quot;&gt;ZeroDivisionError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;ne&quot;&gt;ZeroDivisionError&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -111,7 +111,7 @@
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;ne&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;ne&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;have a exception: &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exc_info&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -243,6 +243,16 @@ class=logging.Formatter
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;最好的做法是在需要 logger 的时候才去获取。&lt;/p&gt;
+
+&lt;pre class=&quot;reference&quot;&gt;
+参考资料:
+
+    &lt;a href=&quot;http://victorlin.me/posts/2012/08/26/good-logging-practice-in-python&quot; target=&quot;_blank&quot;&gt;Good logging practice in Python&lt;/a&gt;
+    &lt;a href=&quot;http://docs.python.org/2/library/logging.html&quot; target=&quot;_blank&quot;&gt;logging&lt;/a&gt;
+    &lt;a href=&quot;http://docs.python.org/2/library/logging.handlers.html&quot; target=&quot;_blank&quot;&gt;logging.handlers&lt;/a&gt;
+    &lt;a href=&quot;http://docs.python.org/2/library/logging.config.html&quot; target=&quot;_blank&quot;&gt;logging.config&lt;/a&gt;
+   《Python 标准库》712P
+&lt;/pre&gt;
 </description>
                 <pubDate>Wed, 27 Nov 2013 23:50:33 +0000</pubDate>
                 <link>http://tonsh.github.io//python/logging/2013/11/27/logging-In-Python.html</link>

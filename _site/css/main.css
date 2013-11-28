@@ -235,6 +235,11 @@ a:visited { color: #08a; }
   background-color: #333;
 }
 
+.post pre.reference {
+  background-color: #ccc;
+  color: #000;
+}
+
 
 /*****************************************************************************/
 /*
