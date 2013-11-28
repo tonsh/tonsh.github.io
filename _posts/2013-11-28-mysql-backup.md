@@ -18,7 +18,7 @@ date=`date + %Y%m%d`
 dir=/home/youremote/mysqlbk
 file=${dir}/mysqlbk.${date}.sql.bz2
  
-mysqldump --add-drop-table -u username -ppassword databasename | bzip2 > ${file}
+mysqldump --add-drop-table -uusername -ppassword databasename | bzip2 > ${file}
  
 #删除7天前的备份文件
 find ${dir} -mtime +7 -exec rm -f {} \;

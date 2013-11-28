@@ -48,7 +48,7 @@
 <span class="nv">dir</span><span class="o">=</span>/home/youremote/mysqlbk
 <span class="nv">file</span><span class="o">=</span><span class="k">${</span><span class="nv">dir</span><span class="k">}</span>/mysqlbk.<span class="k">${</span><span class="nv">date</span><span class="k">}</span>.sql.bz2
  
-mysqldump --add-drop-table -u username -ppassword databasename <span class="p">|</span> bzip2 &gt; <span class="k">${</span><span class="nv">file</span><span class="k">}</span>
+mysqldump --add-drop-table -uusername -ppassword databasename <span class="p">|</span> bzip2 &gt; <span class="k">${</span><span class="nv">file</span><span class="k">}</span>
  
 <span class="c">#删除7天前的备份文件</span>
 find <span class="k">${</span><span class="nv">dir</span><span class="k">}</span> -mtime +7 -exec rm -f <span class="o">{}</span> <span class="se">\;</span>

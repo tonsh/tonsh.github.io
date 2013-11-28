@@ -20,7 +20,7 @@
 &lt;span class=&quot;nv&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/home/youremote/mysqlbk
 &lt;span class=&quot;nv&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/mysqlbk.&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;.sql.bz2
  
-mysqldump --add-drop-table -u username -ppassword databasename &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; bzip2 &amp;gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+mysqldump --add-drop-table -uusername -ppassword databasename &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; bzip2 &amp;gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
  
 &lt;span class=&quot;c&quot;&gt;#删除7天前的备份文件&lt;/span&gt;
 find &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dir&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; -mtime +7 -exec rm -f &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt;
