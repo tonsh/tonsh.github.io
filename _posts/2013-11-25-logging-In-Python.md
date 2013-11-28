@@ -22,6 +22,7 @@ print 'server stop ...'
 在一些简单的调试程序中可以这样做，但如果是在生产环境或者一个很复杂的项目里最好不要这样做。首先，这些调试信息无法被灵活保存在日志里，即使被保存了，也很难在日志看到更详细的信息，如错误级别，时间，出错地点等等。 在项目中记录日志是很重要的。倘若有一天顾客向你反馈问题，这时候首先想到的应该是去查看日志信息了解到底发生了什么错误，前提是你的日志记录很完善。
 
 Pyhton 标准库提供了灵活易用的 logging 模块。一般用法如下：
+
 {% highlight python %}
 import logging
 
@@ -52,6 +53,7 @@ basicConfig 可以配置日志的输出格式，日志级别，目标输出流�
 ```
 
 logger 默认将日志内容输出到终端。还可以输出到文件，发送到邮箱或远程服务器等，这里不做详细介绍，可以参考<a href="http://docs.python.org/2/library/logging.handlers.html#module-logging.handlers" target="_blank">Python 手册</a>。下面以文件为例:
+
 {% highlight python %}
 import logging
 
@@ -84,6 +86,7 @@ output.log
 以下为我自己理解的使用习惯，仅供参考:
 
 debug: 用于需要记录调试信息的地方，如循环体内计数
+
 {% highlight python %}
 for i in range(10):
     logger.debug('number: %s', i)
@@ -92,6 +95,7 @@ for i in range(10):
 {% endhighlight %}
 
 Info: 用于记录运行状态等
+
 {% highlight python %}
 def demo():
     logger.info('demo method start ...')
@@ -100,12 +104,14 @@ def demo():
 {% endhighlight %}
 
 warning: 用于逻辑异常但不是错误时
+
 {% highlight python %}
 if pwd != user.password:
     logger.warning('Login password error')
 {% endhighlight %}
 
 error: 当遇到错误时
+
 {% highlight python %}
 try:
     a = 1 / 0
