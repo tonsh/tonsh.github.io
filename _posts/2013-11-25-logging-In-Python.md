@@ -19,7 +19,7 @@ s.stop()
 print 'server stop ...'
 {% endhighlight %}
 
-在一些简单的调试程序中可以这样做，但如果是在项目的生产环境或者一个很复杂的项目里最好不要这样做。首先，这些调试信息无法被灵活保存在日志里，即使被保存了，也很难在日志看到更详细的信息，如错误级别，时间，出错地点等等。 在项目中记录日志是很重要的。倘若有一天顾客向你反馈问题，这时候首先想到的应该是去查看日志信息了解到底发生了什么错误，前提是你的日志记录很完善。
+在一些简单的调试程序中可以这样做，但如果是在生产环境或者一个很复杂的项目里最好不要这样做。首先，这些调试信息无法被灵活保存在日志里，即使被保存了，也很难在日志看到更详细的信息，如错误级别，时间，出错地点等等。 在项目中记录日志是很重要的。倘若有一天顾客向你反馈问题，这时候首先想到的应该是去查看日志信息了解到底发生了什么错误，前提是你的日志记录很完善。
 
 Pyhton 标准库提供了灵活易用的 logging 模块。一般用法如下：
 {% highlight python %}
@@ -42,7 +42,7 @@ logger.debug('This is a debug message !')
 2013-11-27 18:48:42,591 __main__ ERROR This is a error message !! 
 ```
 
-basicConfig 可以配置日志的输出格式，日志级别，目标输出流等等。日志级别可参考`[这里]`, 低于日志级别的消息将被忽略。如将上例中的日志级别改为 logging.EBUG，输出结果如下：
+basicConfig 可以配置日志的输出格式，日志级别，目标输出流等等。日志级别可参考<a href="http://docs.python.org/2/library/logging.html" target="_blank">手册</a>, 低于日志级别的消息将被忽略。如将上例中的日志级别改为 logging.EBUG，输出结果如下：
 
 ```
 2013-11-27 18:49:43,659 __main__ ERROR This is a error message !!
@@ -51,7 +51,7 @@ basicConfig 可以配置日志的输出格式，日志级别，目标输出流�
 2013-11-27 18:49:43,658 __main__ DEBUG This is a debug message !
 ```
 
-logger 默认将日志内容输出到终端。还可以输出到文件，发送到邮箱或远程服务等，这里不做详细介绍，可以参考官方文档。下面以文件为例:
+logger 默认将日志内容输出到终端。还可以输出到文件，发送到邮箱或远程服务器等，这里不做详细介绍，可以参考<a href="http://docs.python.org/2/library/logging.handlers.html#module-logging.handlers" target="_blank">Python 手册</a>。下面以文件为例:
 {% highlight python %}
 import logging
 
@@ -158,17 +158,17 @@ for i in range(10):
     logger.info('num: %s', i)
 {% endhighlight %}
 
-最后生成 6 个 output 文件，日志信息分别存放在 6 个文件里。backupCount 为备份数，超出这些数量的文档将不会被保留。所以如果 backupCount=6 则最多能生成 7 个日志文件。(文件数 = backupCount + 1)
+最后生成 6 个 output 文件，日志信息分别存放在 6 个文件里。backupCount 为最多保留的日志文件数，超出这些数量的文档将不会被保留。所以如果 backupCount=6 则最多能生成 7 个日志文件。(文件数 = backupCount + 1)
 
 <b>logger 的名字</b>
 
-以上的例子都是使用 `__name__` 作为 logger 的 name 参数。Python 的 `__name__` 是当前包的名字。在foo.bar.mylog文件里调用logging.getLogger(`__name__`)等价于logging.getLogger('foo.bar.mylog'), logger 的名字很类似于 Python 的包名。"foo.bar.mylog", "foo.bar" 都是 "foo" 的子级，子级会继承父级的配置。
+以上的例子都是使用 `__name__` 作为 logger 的 name 参数。Python 的 `__name__` 是当前包的名字。在foo.bar.mylog文件里调用logging.getLogger(`__name__`)等价于logging.getLogger('foo.bar.mylog')。"foo.bar.mylog", "foo.bar" 都是 "foo" 的子级，子级会继承父级的配置。
 
 <b>logger 的配置文件</b>
 
-截至到这里，我们都是在程序中直接对 logger 进行配置，其实配置 logger 最好使用logging.config。配置可以是字典，由 dictConfig 解析, 也可以是文件，由 fileConfig 解析，fileConfig 基于 ConfigParser 格式。配置文件必须包含 loggers, heandlers, formatters 三个部分。<a href="http://docs.python.org/2/library/logging.config.html" target="_blank">详见参考手册</a>
+截至到这里，我们都是在程序中直接对 logger 进行配置，其实配置 logger 最好使用logging.config。配置可以是字典，由 dictConfig 解析, 也可以是文件，由 fileConfig 解析，fileConfig 基于 ConfigParser 格式。配置必须包含 loggers, heandlers, formatters 三个部分。<a href="http://docs.python.org/2/library/logging.config.html" target="_blank">参考手册</a>
 
-假设在 logger 部分定义了一个个名为 "foo" 的logger, 那么就要同时定义一个名为 [logger_foo]的部分；`[handler], [handler_foo], [formatter], [formatter_foo]` 也都要有对 foo 的定义。下面以三个名为 "root", "foo", "bar" 的 logger 为例,这里需要了解 root 是 logger 的默认名字。root 会输出到终端, foo 输出到文件，bar 输出到切分文件，它们的输出格式，日志级别等可以不同:
+假设在 logger 部分定义了一个个名为 "foo" 的 logger, 那么就要同时定义一个名为 [logger_foo]的部分；`[handlers], [handler_foo], [formatters], [formatter_foo]` 也都要有对 foo 的定义。下面以三个名为 "root", "foo", "bar" 的 logger 为例,这里需要了解 root 是 logger 的默认名字。配置 root 输出到终端, foo 输出到文件，bar 输出到切分文件，它们的输出格式，日志级别等可以不同:
 
 logging.conf
 
@@ -247,7 +247,7 @@ for i in range(20):
     logger_bar.info('num: %s', i) 
 {% endhighlight %}
 
-这里需要注意的是加载配置信息时，之前创建的 logger 会失效。
+需要注意的是加载配置信息时，之前创建的 logger 会失效。
 
 {% highlight python %}
 import logging
@@ -260,4 +260,5 @@ logging.config.dictConfig(dict_config)
 
 logger.INFO('logger is not work!')
 {% endhighlight %}
-最好的做法时在需要 logger 的时候才去获取。
+
+最好的做法是在需要 logger 的时候才去获取。

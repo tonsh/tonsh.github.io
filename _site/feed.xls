@@ -20,7 +20,7 @@
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;server stop ...&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;在一些简单的调试程序中可以这样做，但如果是在项目的生产环境或者一个很复杂的项目里最好不要这样做。首先，这些调试信息无法被灵活保存在日志里，即使被保存了，也很难在日志看到更详细的信息，如错误级别，时间，出错地点等等。 在项目中记录日志是很重要的。倘若有一天顾客向你反馈问题，这时候首先想到的应该是去查看日志信息了解到底发生了什么错误，前提是你的日志记录很完善。&lt;/p&gt;
+&lt;p&gt;在一些简单的调试程序中可以这样做，但如果是在生产环境或者一个很复杂的项目里最好不要这样做。首先，这些调试信息无法被灵活保存在日志里，即使被保存了，也很难在日志看到更详细的信息，如错误级别，时间，出错地点等等。 在项目中记录日志是很重要的。倘若有一天顾客向你反馈问题，这时候首先想到的应该是去查看日志信息了解到底发生了什么错误，前提是你的日志记录很完善。&lt;/p&gt;
 
 &lt;p&gt;Pyhton 标准库提供了灵活易用的 logging 模块。一般用法如下：&lt;/p&gt;
 
@@ -40,13 +40,13 @@
 &lt;p&gt;输出结果如下:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;2013-11-27 18:48:42,591 __main__ ERROR This is a error message !! 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;basicConfig 可以配置日志的输出格式，日志级别，目标输出流等等。日志级别可参考&lt;code&gt;[这里]&lt;/code&gt;, 低于日志级别的消息将被忽略。如将上例中的日志级别改为 logging.EBUG，输出结果如下：&lt;/p&gt;
+&lt;p&gt;basicConfig 可以配置日志的输出格式，日志级别，目标输出流等等。日志级别可参考&lt;a href=&quot;http://docs.python.org/2/library/logging.html&quot; target=&quot;_blank&quot;&gt;手册&lt;/a&gt;, 低于日志级别的消息将被忽略。如将上例中的日志级别改为 logging.EBUG，输出结果如下：&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;2013-11-27 18:49:43,659 __main__ ERROR This is a error message !!
 2013-11-27 18:49:43,658 __main__ WARNING This is a Warning message!
 2013-11-27 18:49:43,658 __main__ INFO This is an info message!
 2013-11-27 18:49:43,658 __main__ DEBUG This is a debug message !
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;logger 默认将日志内容输出到终端。还可以输出到文件，发送到邮箱或远程服务等，这里不做详细介绍，可以参考官方文档。下面以文件为例:&lt;/p&gt;
+&lt;p&gt;logger 默认将日志内容输出到终端。还可以输出到文件，发送到邮箱或远程服务器等，这里不做详细介绍，可以参考&lt;a href=&quot;http://docs.python.org/2/library/logging.handlers.html#module-logging.handlers&quot; target=&quot;_blank&quot;&gt;Python 手册&lt;/a&gt;。下面以文件为例:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;logging&lt;/span&gt;
 
@@ -144,17 +144,17 @@ ZeroDivisionError: integer division or modulo by zero
     &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;num: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;最后生成 6 个 output 文件，日志信息分别存放在 6 个文件里。backupCount 为备份数，超出这些数量的文档将不会被保留。所以如果 backupCount=6 则最多能生成 7 个日志文件。(文件数 = backupCount + 1)&lt;/p&gt;
+&lt;p&gt;最后生成 6 个 output 文件，日志信息分别存放在 6 个文件里。backupCount 为最多保留的日志文件数，超出这些数量的文档将不会被保留。所以如果 backupCount=6 则最多能生成 7 个日志文件。(文件数 = backupCount + 1)&lt;/p&gt;
 
 &lt;p&gt;&lt;b&gt;logger 的名字&lt;/b&gt;&lt;/p&gt;
 
-&lt;p&gt;以上的例子都是使用 &lt;code&gt;__name__&lt;/code&gt; 作为 logger 的 name 参数。Python 的 &lt;code&gt;__name__&lt;/code&gt; 是当前包的名字。在foo.bar.mylog文件里调用logging.getLogger(&lt;code&gt;__name__&lt;/code&gt;)等价于logging.getLogger(&amp;#39;foo.bar.mylog&amp;#39;), logger 的名字很类似于 Python 的包名。&amp;quot;foo.bar.mylog&amp;quot;, &amp;quot;foo.bar&amp;quot; 都是 &amp;quot;foo&amp;quot; 的子级，子级会继承父级的配置。&lt;/p&gt;
+&lt;p&gt;以上的例子都是使用 &lt;code&gt;__name__&lt;/code&gt; 作为 logger 的 name 参数。Python 的 &lt;code&gt;__name__&lt;/code&gt; 是当前包的名字。在foo.bar.mylog文件里调用logging.getLogger(&lt;code&gt;__name__&lt;/code&gt;)等价于logging.getLogger(&amp;#39;foo.bar.mylog&amp;#39;)。&amp;quot;foo.bar.mylog&amp;quot;, &amp;quot;foo.bar&amp;quot; 都是 &amp;quot;foo&amp;quot; 的子级，子级会继承父级的配置。&lt;/p&gt;
 
 &lt;p&gt;&lt;b&gt;logger 的配置文件&lt;/b&gt;&lt;/p&gt;
 
-&lt;p&gt;截至到这里，我们都是在程序中直接对 logger 进行配置，其实配置 logger 最好使用logging.config。配置可以是字典，由 dictConfig 解析, 也可以是文件，由 fileConfig 解析，fileConfig 基于 ConfigParser 格式。配置文件必须包含 loggers, heandlers, formatters 三个部分。&lt;a href=&quot;http://docs.python.org/2/library/logging.config.html&quot; target=&quot;_blank&quot;&gt;详见参考手册&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;截至到这里，我们都是在程序中直接对 logger 进行配置，其实配置 logger 最好使用logging.config。配置可以是字典，由 dictConfig 解析, 也可以是文件，由 fileConfig 解析，fileConfig 基于 ConfigParser 格式。配置必须包含 loggers, heandlers, formatters 三个部分。&lt;a href=&quot;http://docs.python.org/2/library/logging.config.html&quot; target=&quot;_blank&quot;&gt;参考手册&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;假设在 logger 部分定义了一个个名为 &amp;quot;foo&amp;quot; 的logger, 那么就要同时定义一个名为 [logger_foo]的部分；&lt;code&gt;[handler], [handler_foo], [formatter], [formatter_foo]&lt;/code&gt; 也都要有对 foo 的定义。下面以三个名为 &amp;quot;root&amp;quot;, &amp;quot;foo&amp;quot;, &amp;quot;bar&amp;quot; 的 logger 为例,这里需要了解 root 是 logger 的默认名字。root 会输出到终端, foo 输出到文件，bar 输出到切分文件，它们的输出格式，日志级别等可以不同:&lt;/p&gt;
+&lt;p&gt;假设在 logger 部分定义了一个个名为 &amp;quot;foo&amp;quot; 的 logger, 那么就要同时定义一个名为 [logger_foo]的部分；&lt;code&gt;[handlers], [handler_foo], [formatters], [formatter_foo]&lt;/code&gt; 也都要有对 foo 的定义。下面以三个名为 &amp;quot;root&amp;quot;, &amp;quot;foo&amp;quot;, &amp;quot;bar&amp;quot; 的 logger 为例,这里需要了解 root 是 logger 的默认名字。配置 root 输出到终端, foo 输出到文件，bar 输出到切分文件，它们的输出格式，日志级别等可以不同:&lt;/p&gt;
 
 &lt;p&gt;logging.conf&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;[loggers]
@@ -229,7 +229,7 @@ class=logging.Formatter
     &lt;span class=&quot;n&quot;&gt;logger_bar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;num: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;这里需要注意的是加载配置信息时，之前创建的 logger 会失效。&lt;/p&gt;
+&lt;p&gt;需要注意的是加载配置信息时，之前创建的 logger 会失效。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;logging&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;logging.config&lt;/span&gt;
@@ -242,7 +242,7 @@ class=logging.Formatter
 &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;INFO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;logger is not work!&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;最好的做法时在需要 logger 的时候才去获取。&lt;/p&gt;
+&lt;p&gt;最好的做法是在需要 logger 的时候才去获取。&lt;/p&gt;
 </description>
                 <pubDate>Wed, 27 Nov 2013 23:50:33 +0000</pubDate>
                 <link>http://tonsh.github.io//python/logging/2013/11/27/logging-In-Python.html</link>
