@@ -101,6 +101,7 @@ a:visited { color: #08a; }
 }
 
 .post-title {
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -202,6 +203,10 @@ a:visited { color: #08a; }
 /*
 /*****************************************************************************/
 
+.post {
+    font-size: 14px;
+}
+
 /* standard */
 .post pre {
   border: 0px solid #ddd;
@@ -238,6 +243,21 @@ a:visited { color: #08a; }
 .post pre.reference {
   background-color: #ccc;
   color: #000;
+}
+
+.post h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.post h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.post h4 {
+    font-size: 16px;
+    font-weight: bold;
 }
 
 

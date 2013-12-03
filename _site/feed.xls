@@ -7,6 +7,119 @@
         <atom:link href="http://tonsh.github.io/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
+                <title>Git 基础命令汇总（一）</title>
+                <description>&lt;p&gt;这篇文章只是记录了一些平时在项目中经常使用的 Git 基础命令。之后会陆续写几篇关于 Git 的工作原理及高级用法。&lt;/p&gt;
+
+&lt;h3&gt;新建版本库&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git init    从当前目录创建项目仓库&lt;/li&gt;
+&lt;li&gt;git clone &amp;lt;url&amp;gt; 从远程仓库克隆项目&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;查看状态&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git status  查看文件状态&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;添加或更新文件&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git add &amp;lt;file-name&amp;gt; 将添加或修改的文件添加至缓存区&lt;/li&gt;
+&lt;li&gt;git commit -m &amp;#39;提交信息&amp;#39; 提交缓存区的内容至HEAD&lt;/li&gt;
+&lt;li&gt;git commit -a 等价于 git add filename; git commit; 这样可以跳过暂存区, 但不太建议这样写，除非你非常确定你需要提交哪些些内容。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;撤销操作&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git checkout -- &amp;lt;file-name&amp;gt; 从工作目录取消修改&lt;/li&gt;
+&lt;li&gt;git reset HEAD -- &amp;lt;file-name&amp;gt; 从暂存区取消修改&lt;/li&gt;
+&lt;li&gt;git rebset HEAD^ --hard 回滚到 HEAD 的前一次提交，不保存修改&lt;/li&gt;
+&lt;li&gt;git commit -amend 修改最后一次提交；有时候提交完发现漏掉了几个文件没有加或者提交信息写错了，可以使用这个命令进行修改。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;git commit -m &amp;#39;提交信息&amp;#39;
+git add forget_me.py
+git commit -amend
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;内容比较&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git diff &amp;lt;file-name&amp;gt; 查看工作目录的文件与暂存区的差异&lt;/li&gt;
+&lt;li&gt;git diff --cached 查看暂存区与上次提交(HEAD)的差异&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;删除移动文件&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git rm &amp;lt;file-name&amp;gt; 删除文件&lt;/li&gt;
+&lt;li&gt;git mv &amp;lt;file&lt;em&gt;from&amp;gt; &amp;lt;file&lt;/em&gt;to&amp;gt; 移动文件&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;查看历史&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git log 查看提交历史记录&lt;/li&gt;
+&lt;li&gt;git log -p 查看提交历史记录并显示修改内容&lt;/li&gt;
+&lt;li&gt;git log [-p] -&amp;lt;number&amp;gt; 查看前 number 条历史记录&lt;/li&gt;
+&lt;li&gt;git log [-p] --stat 查看历史记录并显示增改统计&lt;/li&gt;
+&lt;li&gt;git log --pretty=oneline  每个提交显示一行，方便快速浏览提交历史&lt;/li&gt;
+&lt;li&gt;git log --graph --pretty=oneline 方便查看分支提交图形&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;远程仓库&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git remote -v 显示所有的远程仓库&lt;/li&gt;
+&lt;li&gt;git remote add &amp;lt;remote-name&amp;gt; &amp;lt;url&amp;gt; 添加远程仓库&lt;/li&gt;
+&lt;li&gt;git push &amp;lt;remote-name&amp;gt; &amp;lt;branch-name&amp;gt; 将 HEAD 中的数据提交至远程版本库。该命令需要有远程仓库服务器的写权限，如果有权限限制的版本库可以参考 GitHub 的 forking 使用。&lt;/li&gt;
+&lt;li&gt;git pull 从远程版本库更新最新代码&lt;/li&gt;
+&lt;li&gt;git remote rename &amp;lt;from-remote-name&amp;gt; &amp;lt;to-remote-name&amp;gt; 重命名远程仓库的简称。&lt;/li&gt;
+&lt;li&gt;git remote rm &amp;lt;remote-name&amp;gt; 删除远程仓库&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;git remote add location url
+git remote -v
+git remote rename location local
+git remote rm local
+git remote -v
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;分支&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git brand &amp;lt;brand-name&amp;gt; 新建brand-name 分支&lt;/li&gt;
+&lt;li&gt;git checkout &amp;lt;brand-name&amp;gt; 切换至 brand-name 分支&lt;/li&gt;
+&lt;li&gt;git branch -l 查看本地分支列表&lt;/li&gt;
+&lt;li&gt;git branch -r 查看远程分支&lt;/li&gt;
+&lt;li&gt;git branch -a 查看远程与本地分支&lt;/li&gt;
+&lt;li&gt;git branch -d &amp;lt;brand-name&amp;gt; 删除 brand-name 分支，并将brand-name 分支合并至当前分支&lt;/li&gt;
+&lt;li&gt;git branch -D &amp;lt;brand-name&amp;gt; 删除 brand-name 分支，但不合并&lt;/li&gt;
+&lt;li&gt;git push &amp;lt;remote-name&amp;gt; &amp;lt;branch-name&amp;gt; 删除远程分支&lt;/li&gt;
+&lt;li&gt;git merge &amp;lt;brand-name&amp;gt; 合并分支&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;配置&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;git config [--global] user.name &amp;lt;Firstname Lastname&amp;gt; 配置用户信息&lt;/li&gt;
+&lt;li&gt;git config [--global] user.email &amp;lt;your-email&amp;gt;&lt;/li&gt;
+&lt;li&gt;git config [--global] core.editor emacs 设置文本编辑器为 emacs, 默认为 vim&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre class=&quot;reference&quot;&gt;
+参考资料:
+    《Pro Git》
+    &lt;a href=&quot;http://rogerdudler.github.io/git-guide/index.zh.html&quot; target=&quot;_blank&quot;&gt;《git - 简易指南》&lt;/a&gt;
+    &lt;a href=&quot;http://oli.jp/2012/git-powerup/&quot; target=&quot;_blank&quot;&gt;《Git config powerup with aliases, diff &amp; log》&lt;/a&gt;
+    &lt;a href=&quot;https://github.com/fengzimaster/systemConfig/blob/master/gitTest.md&quot; target=&quot;_blank&quot;&gt;《Git test commond》&lt;/a&gt;
+&lt;/pre&gt;
+</description>
+                <pubDate>Mon, 02 Dec 2013 11:50:33 +0000</pubDate>
+                <link>http://tonsh.github.io//git/2013/12/02/git-summary.html</link>
+                <guid isPermaLink="true">http://tonsh.github.io//git/2013/12/02/git-summary.html</guid>
+            </item>
+        
+            <item>
                 <title>Mysql 同步备份方案</title>
                 <description>&lt;pre class=&quot;reference&quot;&gt;
 这是一篇以前在自己博客写的旧文章，最近考虑要不要关闭以前的博客(好久没被更新过了 &gt;_&lt;)。 所以挑了一篇想留下的搬过来。
