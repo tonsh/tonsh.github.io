@@ -28,7 +28,7 @@
 &lt;ul&gt;
 &lt;li&gt;git add &amp;lt;file-name&amp;gt; 将添加或修改的文件添加至缓存区&lt;/li&gt;
 &lt;li&gt;git commit -m &amp;#39;提交信息&amp;#39; 提交缓存区的内容至HEAD&lt;/li&gt;
-&lt;li&gt;git commit -a 等价于 git add filename; git commit; 这样可以跳过暂存区, 但不太建议这样写，除非你非常确定你需要提交哪些些内容。&lt;/li&gt;
+&lt;li&gt;git commit -a 等价于 git add filename; git commit; 这样可以跳过暂存区, 但不太建议这样写，除非你非常确定需要提交哪些些内容。&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3&gt;撤销操作&lt;/h3&gt;
@@ -54,7 +54,7 @@ git commit -amend
 
 &lt;ul&gt;
 &lt;li&gt;git rm &amp;lt;file-name&amp;gt; 删除文件&lt;/li&gt;
-&lt;li&gt;git mv &amp;lt;file&lt;em&gt;from&amp;gt; &amp;lt;file&lt;/em&gt;to&amp;gt; 移动文件&lt;/li&gt;
+&lt;li&gt;git mv &amp;lt;file-from&amp;gt; &amp;lt;file-to&amp;gt; 移动文件&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3&gt;查看历史&lt;/h3&gt;
@@ -238,11 +238,13 @@ crontab -l
 &lt;p&gt;output.log&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text language-text&quot; data-lang=&quot;text&quot;&gt;2013-11-27 18:49:43,659 __main__ ERROR This is a error message !!
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;b&gt;日志级别的使用习惯&lt;/b&gt;&lt;/p&gt;
+&lt;h3&gt;日志级别的使用习惯&lt;/h3&gt;
 
 &lt;p&gt;以下为我自己理解的使用习惯，仅供参考:&lt;/p&gt;
 
-&lt;p&gt;debug: 用于需要记录调试信息的地方，如循环体内计数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;debug: 用于需要记录调试信息的地方，如循环体内计数&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;number: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%s&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -250,7 +252,9 @@ crontab -l
     &lt;span class=&quot;c&quot;&gt;# do something with for-loop&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Info: 用于记录运行状态等&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Info: 用于记录运行状态等&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;demo method start ...&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -258,13 +262,17 @@ crontab -l
     &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;demo method end ...&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;warning: 用于逻辑异常但不是错误时&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;warning: 用于逻辑异常但不是错误时&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pwd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;warning&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Login password error&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;error: 当遇到错误时&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;error: 当遇到错误时&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
@@ -272,7 +280,7 @@ crontab -l
     &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;b&gt;记录异常&lt;/b&gt;&lt;/p&gt;
+&lt;h3&gt;记录异常&lt;/h3&gt;
 
 &lt;p&gt;当程序抛出异常时，我们更希望将所有的异常信息写进日志，方便查看具体的出错信息。这时可以设置 logger 的 exc_info 参数为 True, logger 将会记录完整的异常信息。&lt;/p&gt;
 
@@ -289,7 +297,7 @@ Traceback (most recent call last):
     a = 1 / 0
 ZeroDivisionError: integer division or modulo by zero 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;b&gt;切分日志文件 (Rotating file handler)&lt;/b&gt;&lt;/p&gt;
+&lt;h3&gt;切分日志文件 (Rotating file handler)&lt;/h3&gt;
 
 &lt;p&gt;使用 FileHandler 写日志，日志文件会一直增长下去。也许某天它会占满你的磁盘。为了避免这种情况，建议使用 RotatingFileHandler 代替 FileHandler。&lt;/p&gt;
 
@@ -313,11 +321,11 @@ ZeroDivisionError: integer division or modulo by zero
 
 &lt;p&gt;最后生成 6 个 output 文件，日志信息分别存放在 6 个文件里。backupCount 为最多保留的日志文件数，超出这些数量的文档将不会被保留。所以如果 backupCount=6 则最多能生成 7 个日志文件。(文件数 = backupCount + 1)&lt;/p&gt;
 
-&lt;p&gt;&lt;b&gt;logger 的名字&lt;/b&gt;&lt;/p&gt;
+&lt;h3&gt;logger 的名字&lt;/h3&gt;
 
 &lt;p&gt;以上的例子都是使用 &lt;code&gt;__name__&lt;/code&gt; 作为 logger 的 name 参数。Python 的 &lt;code&gt;__name__&lt;/code&gt; 是当前包的名字。在foo.bar.mylog文件里调用logging.getLogger(&lt;code&gt;__name__&lt;/code&gt;)等价于logging.getLogger(&amp;#39;foo.bar.mylog&amp;#39;)。&amp;quot;foo.bar.mylog&amp;quot;, &amp;quot;foo.bar&amp;quot; 都是 &amp;quot;foo&amp;quot; 的子级，子级会继承父级的配置。&lt;/p&gt;
 
-&lt;p&gt;&lt;b&gt;logger 的配置文件&lt;/b&gt;&lt;/p&gt;
+&lt;h3&gt;logger 的配置文件&lt;/h3&gt;
 
 &lt;p&gt;截至到这里，我们都是在程序中直接对 logger 进行配置，其实配置 logger 最好使用logging.config。配置可以是字典，由 dictConfig 解析, 也可以是文件，由 fileConfig 解析，fileConfig 基于 ConfigParser 格式。配置必须包含 loggers, heandlers, formatters 三个部分。&lt;a href=&quot;http://docs.python.org/2/library/logging.config.html&quot; target=&quot;_blank&quot;&gt;参考手册&lt;/a&gt;&lt;/p&gt;
 

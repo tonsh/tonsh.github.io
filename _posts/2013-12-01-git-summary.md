@@ -17,7 +17,7 @@ categories: Git
 ### 添加或更新文件
 * git add \<file-name> 将添加或修改的文件添加至缓存区
 * git commit -m '提交信息' 提交缓存区的内容至HEAD
-* git commit -a 等价于 git add filename; git commit; 这样可以跳过暂存区, 但不太建议这样写，除非你非常确定你需要提交哪些些内容。
+* git commit -a 等价于 git add filename; git commit; 这样可以跳过暂存区, 但不太建议这样写，除非你非常确定需要提交哪些些内容。
 
 ### 撤销操作
 * git checkout -- \<file-name> 从工作目录取消修改
@@ -37,7 +37,7 @@ git commit -amend
 
 ### 删除移动文件
 * git rm \<file-name> 删除文件
-* git mv \<file_from> \<file_to> 移动文件
+* git mv \<file-from> \<file-to> 移动文件
 
 ### 查看历史
 * git log 查看提交历史记录

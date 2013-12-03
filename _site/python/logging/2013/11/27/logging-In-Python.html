@@ -99,11 +99,13 @@
 <p>output.log</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">2013-11-27 18:49:43,659 __main__ ERROR This is a error message !!
 </code></pre></div>
-<p><b>日志级别的使用习惯</b></p>
+<h3>日志级别的使用习惯</h3>
 
 <p>以下为我自己理解的使用习惯，仅供参考:</p>
 
-<p>debug: 用于需要记录调试信息的地方，如循环体内计数</p>
+<ul>
+<li>debug: 用于需要记录调试信息的地方，如循环体内计数</li>
+</ul>
 
 <div class="highlight"><pre><code class="python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;number: </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
@@ -111,7 +113,9 @@
     <span class="c"># do something with for-loop</span>
 </code></pre></div>
 
-<p>Info: 用于记录运行状态等</p>
+<ul>
+<li>Info: 用于记录运行状态等</li>
+</ul>
 
 <div class="highlight"><pre><code class="python"><span class="k">def</span> <span class="nf">demo</span><span class="p">():</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;demo method start ...&#39;</span><span class="p">)</span>
@@ -119,13 +123,17 @@
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;demo method end ...&#39;</span><span class="p">)</span>
 </code></pre></div>
 
-<p>warning: 用于逻辑异常但不是错误时</p>
+<ul>
+<li>warning: 用于逻辑异常但不是错误时</li>
+</ul>
 
 <div class="highlight"><pre><code class="python"><span class="k">if</span> <span class="n">pwd</span> <span class="o">!=</span> <span class="n">user</span><span class="o">.</span><span class="n">password</span><span class="p">:</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;Login password error&#39;</span><span class="p">)</span>
 </code></pre></div>
 
-<p>error: 当遇到错误时</p>
+<ul>
+<li>error: 当遇到错误时</li>
+</ul>
 
 <div class="highlight"><pre><code class="python"><span class="k">try</span><span class="p">:</span>
     <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
@@ -133,7 +141,7 @@
     <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
 </code></pre></div>
 
-<p><b>记录异常</b></p>
+<h3>记录异常</h3>
 
 <p>当程序抛出异常时，我们更希望将所有的异常信息写进日志，方便查看具体的出错信息。这时可以设置 logger 的 exc_info 参数为 True, logger 将会记录完整的异常信息。</p>
 
@@ -150,7 +158,7 @@ Traceback (most recent call last):
     a = 1 / 0
 ZeroDivisionError: integer division or modulo by zero 
 </code></pre></div>
-<p><b>切分日志文件 (Rotating file handler)</b></p>
+<h3>切分日志文件 (Rotating file handler)</h3>
 
 <p>使用 FileHandler 写日志，日志文件会一直增长下去。也许某天它会占满你的磁盘。为了避免这种情况，建议使用 RotatingFileHandler 代替 FileHandler。</p>
 
@@ -174,11 +182,11 @@ ZeroDivisionError: integer division or modulo by zero
 
 <p>最后生成 6 个 output 文件，日志信息分别存放在 6 个文件里。backupCount 为最多保留的日志文件数，超出这些数量的文档将不会被保留。所以如果 backupCount=6 则最多能生成 7 个日志文件。(文件数 = backupCount + 1)</p>
 
-<p><b>logger 的名字</b></p>
+<h3>logger 的名字</h3>
 
 <p>以上的例子都是使用 <code>__name__</code> 作为 logger 的 name 参数。Python 的 <code>__name__</code> 是当前包的名字。在foo.bar.mylog文件里调用logging.getLogger(<code>__name__</code>)等价于logging.getLogger(&#39;foo.bar.mylog&#39;)。&quot;foo.bar.mylog&quot;, &quot;foo.bar&quot; 都是 &quot;foo&quot; 的子级，子级会继承父级的配置。</p>
 
-<p><b>logger 的配置文件</b></p>
+<h3>logger 的配置文件</h3>
 
 <p>截至到这里，我们都是在程序中直接对 logger 进行配置，其实配置 logger 最好使用logging.config。配置可以是字典，由 dictConfig 解析, 也可以是文件，由 fileConfig 解析，fileConfig 基于 ConfigParser 格式。配置必须包含 loggers, heandlers, formatters 三个部分。<a href="http://docs.python.org/2/library/logging.config.html" target="_blank">参考手册</a></p>
 
