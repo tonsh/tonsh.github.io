@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Git 基础命令汇总（一）
+title: Git 基础命令汇总
 date:   2013-12-02 11:50:33
 categories: Git
 ---
