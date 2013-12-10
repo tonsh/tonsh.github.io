@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Git hooks 进行语法检查实践
+title: 使用 Git hook 实现自动代码检查
 date:   2013-12-10 19:50:33
 categories: Git
 ---

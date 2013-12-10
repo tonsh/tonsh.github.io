@@ -7,7 +7,7 @@
         <atom:link href="http://tonsh.github.io/feed.xml" rel="self" type="application/rss+xml" />
         
             <item>
-                <title>Git hooks 进行语法检查实践</title>
+                <title>使用 Git hook 实现自动代码检查</title>
                 <description>&lt;p&gt;我们经常一个为百思不得其解的问题调试好久之后才发现原来是变量名拼写错了；原来是括号没配对儿；团队内部经常强调代码规范，稍有不慎就会写出与团队风格不统一的代码。我们可以使用一些语法检查，代码规范的工具或 IDE 来避免这些事情的发生，每次发布程序之前进行代码检查是个好习惯，但对于开发人员来说需要随时记得去做这些事情，稍不注意就会因为一个拼写错误被小伙伴们嘲笑起来，这些事情能不能自动实现呢？如果你们的版本管理工具使用的是 Git，那么接下来要讲的 Git hooks 一定能帮到你。&lt;/p&gt;
 
 &lt;p&gt;Git 的 hooks 脚本放在项目目录的 .git/hooks 下, .sample 文件只是样例脚本，如果需要使用提交前的 hook 需要将 pre-commit.sample 文件重命名为 pre-commit, 这些脚本可以使用 shell, python, ruby 等任何可以调用 shell 命令的语言实现。&lt;/p&gt;
