@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>Git hooks 进行语法检查实践</title>
+        <meta name="viewport" content="width=device-width" />
+
+        <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css" />
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css" />
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css" />
+        
+        <!-- RSS -->
+        <link rel="alternate" type="application/rss+xml" title="Tonsh's Blog" href="http://tonsh.github.io/feed.xml" />
+
+    </head>
+
+    <body>
+      <div class="site">
+        <div class="header">
+  <h1 class="title"><a href="/">Tonsh's Blog</a></h1>
+</div>
+
+<!--<div class="nav">
+  <div class="nav-block">
+      <a class="item" href="/">Home</a>
+  </div>
+</div>
+-->
+
+<div class="site-content">
+<h2 class="post-title">Git hooks 进行语法检查实践</h2>
+<p class="meta">10 Dec 2013</p>
+
+<div class="post">
+<p>我们经常一个为百思不得其解的问题调试好久之后才发现原来是变量名拼写错了；原来是括号没配对儿；团队内部经常强调代码规范，稍有不慎就会写出与团队风格不统一的代码。我们可以使用一些语法检查，代码规范的工具或 IDE 来避免这些事情的发生，每次发布程序之前进行代码检查是个好习惯，但对于开发人员来说需要随时记得去做这些事情，稍不注意就会因为一个拼写错误被小伙伴们嘲笑起来，这些事情能不能自动实现呢？如果你们的版本管理工具使用的是 Git，那么接下来要讲的 Git hooks 一定能帮到你。</p>
+
+<p>Git 的 hooks 脚本放在项目目录的 .git/hooks 下, .sample 文件只是样例脚本，如果需要使用提交前的 hook 需要将 pre-commit.sample 文件重命名为 pre-commit, 这些脚本可以使用 shell, python, ruby 等任何可以调用 shell 命令的语言实现。</p>
+
+<p>以下为使用 pyflakes, pep8 检查 Python 语法, 并自动进行单元测试的脚本样例(仅做参考):</p>
+
+<div class="highlight"><pre><code class="python"><span class="lineno"> 1</span> <span class="c">#! /usr/bin/env python</span>
+<span class="lineno"> 2</span> <span class="c"># coding=utf-8</span>
+<span class="lineno"> 3</span> 
+<span class="lineno"> 4</span> <span class="kn">import</span> <span class="nn">re</span>
+<span class="lineno"> 5</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="lineno"> 6</span> <span class="kn">import</span> <span class="nn">sys</span>
+<span class="lineno"> 7</span> <span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="lineno"> 8</span> 
+<span class="lineno"> 9</span> 
+<span class="lineno">10</span> <span class="k">def</span> <span class="nf">syntax_checker</span><span class="p">():</span>
+<span class="lineno">11</span>     <span class="sd">&quot;&quot;&quot;</span>
+<span class="lineno">12</span> <span class="sd">        pyflakes 与 pep8 进行语法与代码风格检查。</span>
+<span class="lineno">13</span> <span class="sd">        有严重语法错误时提交会被直接拒绝；</span>
+<span class="lineno">14</span> <span class="sd">        如果有风格问题，会询问提交人员是否继续进行提交</span>
+<span class="lineno">15</span> <span class="sd">    &quot;&quot;&quot;</span>
+<span class="lineno">16</span>     <span class="n">errors</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="lineno">17</span>     <span class="n">warning</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="lineno">18</span>     <span class="n">pep8_info</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="lineno">19</span> 
+<span class="lineno">20</span>     <span class="c"># 获取有改动的文档</span>
+<span class="lineno">21</span>     <span class="n">staged_cmd</span> <span class="o">=</span> <span class="s">&#39;git diff --staged --name-only HEAD&#39;</span>
+<span class="lineno">22</span>     <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">staged_cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+<span class="lineno">23</span>     <span class="k">with</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span> <span class="k">as</span> <span class="n">std_out</span><span class="p">:</span>
+<span class="lineno">24</span>         <span class="k">for</span> <span class="n">staged_file</span> <span class="ow">in</span> <span class="n">std_out</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+<span class="lineno">25</span>             <span class="n">staged_file</span> <span class="o">=</span> <span class="n">staged_file</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="lineno">26</span> 
+<span class="lineno">27</span>             <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">staged_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;.py&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">staged_file</span><span class="p">)):</span>
+<span class="lineno">28</span>                 <span class="k">continue</span>
+<span class="lineno">29</span> 
+<span class="lineno">30</span>             <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">&#39;pyflakes </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">staged_file</span><span class="p">)</span>
+<span class="lineno">31</span>             <span class="n">warning</span> <span class="o">+=</span> <span class="n">stdout</span>
+<span class="lineno">32</span>             <span class="n">errors</span> <span class="o">+=</span> <span class="n">stderr</span>
+<span class="lineno">33</span> 
+<span class="lineno">34</span>             <span class="n">stdout</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">&#39;pep8 </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">staged_file</span><span class="p">)</span>
+<span class="lineno">35</span>             <span class="n">pep8_info</span> <span class="o">+=</span> <span class="n">stdout</span>
+<span class="lineno">36</span> 
+<span class="lineno">37</span>     <span class="n">failed</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="lineno">38</span>     <span class="k">if</span> <span class="n">is_error</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_warning</span><span class="p">(</span><span class="n">warning</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_warning</span><span class="p">(</span><span class="n">pep8_info</span><span class="p">):</span>
+<span class="lineno">39</span>         <span class="n">failed</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="lineno">40</span>     <span class="k">return</span> <span class="n">failed</span>
+<span class="lineno">41</span> 
+<span class="lineno">42</span> 
+<span class="lineno">43</span> <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+<span class="lineno">44</span>     <span class="sd">&quot;&quot;&quot; 执行命令, 返回标准输出与错误信息 &quot;&quot;&quot;</span>
+<span class="lineno">45</span> 
+<span class="lineno">46</span>     <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+<span class="lineno">47</span>                             <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+<span class="lineno">48</span>                             <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+<span class="lineno">49</span>     <span class="k">return</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+<span class="lineno">50</span> 
+<span class="lineno">51</span> 
+<span class="lineno">52</span> <span class="k">def</span> <span class="nf">is_error</span><span class="p">(</span><span class="n">errors</span><span class="p">):</span>
+<span class="lineno">53</span>     <span class="sd">&quot;&quot;&quot; 严重错误，如语法错误等 &quot;&quot;&quot;</span>
+<span class="lineno">54</span>     <span class="n">failed</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="lineno">55</span> 
+<span class="lineno">56</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="lineno">57</span>         <span class="n">failed</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="lineno">58</span> 
+<span class="lineno">59</span>         <span class="k">print</span> <span class="s">&quot;[failed] You cann&#39;t commit, repair the errors or run `pyflakes file.py` view details:&quot;</span>
+<span class="lineno">60</span>         <span class="k">print</span> <span class="s">&quot;------------------------------&quot;</span>
+<span class="lineno">61</span>         <span class="k">print</span> <span class="n">errors</span>
+<span class="lineno">62</span> 
+<span class="lineno">63</span>     <span class="k">return</span> <span class="n">failed</span>
+<span class="lineno">64</span> 
+<span class="lineno">65</span> 
+<span class="lineno">66</span> <span class="k">def</span> <span class="nf">is_warning</span><span class="p">(</span><span class="n">warning</span><span class="p">):</span>
+<span class="lineno">67</span>     <span class="sd">&quot;&quot;&quot; 代码规范建议信息 &quot;&quot;&quot;</span>
+<span class="lineno">68</span>     <span class="n">failed</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="lineno">69</span> 
+<span class="lineno">70</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">warning</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="lineno">71</span>         <span class="k">print</span> <span class="n">warning</span>
+<span class="lineno">72</span>         <span class="k">print</span> <span class="s">&quot;Encounter some non-standard syntax! Do you want to correct them? y(es) or n(o):&quot;</span>
+<span class="lineno">73</span>         <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+<span class="lineno">74</span>             <span class="n">input_row</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="lineno">75</span> 
+<span class="lineno">76</span>             <span class="k">if</span> <span class="n">input_row</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="s">&#39;yes&#39;</span><span class="p">]:</span>
+<span class="lineno">77</span>                 <span class="n">failed</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="lineno">78</span>                 <span class="k">break</span>
+<span class="lineno">79</span>             <span class="k">elif</span> <span class="n">input_row</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;no&#39;</span><span class="p">]:</span>
+<span class="lineno">80</span>                 <span class="n">failed</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="lineno">81</span>                 <span class="k">break</span>
+<span class="lineno">82</span>             <span class="k">print</span> <span class="s">&#39;Input y(es) or n(o):&#39;</span>
+<span class="lineno">83</span> 
+<span class="lineno">84</span>     <span class="k">return</span> <span class="n">failed</span>
+<span class="lineno">85</span> 
+<span class="lineno">86</span> <span class="k">print</span> <span class="s">&#39;=================== syntax check start =======================&#39;</span>
+<span class="lineno">87</span> <span class="n">failed</span> <span class="o">=</span> <span class="n">syntax_checker</span><span class="p">()</span>
+<span class="lineno">88</span> <span class="k">print</span> <span class="s">&#39;=================== syntax check end =========================&#39;</span>
+<span class="lineno">89</span> <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">failed</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p>只要将该脚本移至您项目中的 .git/hooks/pre-commit, 记得修改该文件为可执行权限。每次 git commit 之前就会自动进行语法检查了, 如果有语法错误的提交，git commit 将被拒绝。如果有代码规范问题会询问对方是否停止提交进行修改。</p>
+
+<p>如果在提交时不想进行 pre-commit, 只需要添加 --no-verify 参数即可。</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">git commit --no-verify -m &#39;提交信息&#39;
+</code></pre></div>
+<pre class="reference">
+参考:
+    《Pro Git》
+    <a href="http://fitzgeraldnick.com/weblog/9" target="_blank">Git Hooks and Pylint</a>
+</pre>
+
+</div>
+
+<!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"tonsh"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->
+
+</div>
+
+
+        <div class="footer">
+          <p>
+            &copy; 2013 - 2013 tonsh&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/about">About</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/links">Links</a>&nbsp;&nbsp;|&nbsp;&nbsp;Powered by <a href="http://github.com/mojombo/jekyll" target="_blank">Jekyll</a>&<a href="http://pages.github.com" target="_blank">GitHub</a>
+          </p>
+        </div>
+      </div>
+    </body>
+</html>
