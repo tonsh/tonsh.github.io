@@ -13,8 +13,8 @@ Git 的 hooks 脚本放在项目目录的 .git/hooks 下, .sample 文件只是�
 {% highlight python linenos %}
 #! /usr/bin/env python
 # coding=utf-8
+""" 代码提交前实现自动语法检测 """
 
-import re
 import os
 import sys
 import subprocess
@@ -37,7 +37,7 @@ def syntax_checker():
         for staged_file in std_out.readlines():
             staged_file = staged_file.strip()
 
-            if not (staged_file.endswith('.py') or os.path.exists(staged_file)):
+            if not (staged_file.endswith('.py') and os.path.exists(staged_file)):
                 continue
 
             stdout, stderr = process('pyflakes %s' % staged_file)
@@ -66,10 +66,10 @@ def is_error(errors):
     """ 严重错误，如语法错误等 """
     failed = False
 
-    if len(errors) > 0:
+    if errors:
         failed = True
 
-        print "[failed] You cann't commit, repair the errors or run `pyflakes file.py` view details:"
+        print "[failed] You cann't commit, repair the errors or run `pyflakes` view details:"
         print "------------------------------"
         print errors
 
@@ -80,16 +80,18 @@ def is_warning(warning):
     """ 代码规范建议信息 """
     failed = False
 
-    if len(warning) > 0:
+    if warning:
         print warning
         print "Encounter some non-standard syntax! Do you want to correct them? y(es) or n(o):"
+        # 从终端输入
+        sys.stdin = open('/dev/tty')
         while True:
             input_row = sys.stdin.readline().strip().lower()
 
-            if input_row in ['y', 'yes']:
+            if input_row in ('y', 'yes'):
                 failed = True
                 break
-            elif input_row in ['n', 'no']:
+            elif input_row in ('n', 'no'):
                 failed = False
                 break
             print 'Input y(es) or n(o):'
