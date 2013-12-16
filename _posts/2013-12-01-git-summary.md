@@ -78,6 +78,7 @@ git remote -v
 * git config [--global] user.name \<Firstname Lastname> 配置用户信息
 * git config [--global] user.email \<your-email>
 * git config [--global] core.editor emacs 设置文本编辑器为 emacs, 默认为 vim
+* git config autocrlf true  保证 Mac 和 Linux 系统不会引入 CRLF 换行符（会把 CRLF 换行符替换为 LF）
 
 <pre class="reference">
 参考资料:
