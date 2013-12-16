@@ -54,7 +54,7 @@ def syntax_checker():
 
 
 def is_python_file(filename):
-    if staged_file.endswith(filename) and os.path.exists(filename):
+    if filename.endswith('.py') and os.path.exists(filename):
         return True
 
     return False
