@@ -37,7 +37,7 @@ def syntax_checker():
         for staged_file in std_out.readlines():
             staged_file = staged_file.strip()
 
-            if not (staged_file.endswith('.py') and os.path.exists(staged_file)):
+            if not is_python_file(staged_file):
                 continue
 
             stdout, stderr = process('pyflakes %s' % staged_file)
@@ -52,6 +52,12 @@ def syntax_checker():
         failed = True
     return failed
 
+
+def is_python_file(filename):
+    if staged_file.endswith(filename) and os.path.exists(filename):
+        return True
+
+    return False
 
 def process(cmd):
     """ 执行命令, 返回标准输出与错误信息 """
