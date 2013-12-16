@@ -69,8 +69,9 @@ def is_error(errors):
     if errors:
         failed = True
 
-        print "[failed] You cann't commit, repair the errors or run `pyflakes` view details:"
-        print "------------------------------"
+        print ("[failed] You cann't commit, repair the errors "
+               "or run `pyflakes` view details:\n"
+               "------------------------------")
         print errors
 
     return failed
@@ -82,7 +83,8 @@ def is_warning(warning):
 
     if warning:
         print warning
-        print "Encounter some non-standard syntax! Do you want to correct them? y(es) or n(o):"
+        print ("Encounter some non-standard syntax! "
+               "Do you want to correct them? y(es) or n(o):")
         # 从终端输入
         sys.stdin = open('/dev/tty')
         while True:
