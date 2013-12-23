@@ -74,8 +74,12 @@ git remote -v
 * git push \<remote-name> \<branch-name> 删除远程分支
 * git merge \<brand-name> 合并分支
 * 
+
 #### 标签
-git describe --tag `git rev-list --tags --max-count=2` 查看最近两条tag列表
+* 查看最近两条tag列表
+    ```
+    git describe --tag `git rev-list --tags --max-count=2` 
+    ```
 
 ### 配置
 * git config [--global] user.name \<Firstname Lastname> 配置用户信息
