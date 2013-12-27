@@ -71,7 +71,8 @@ git remote -v
 * git branch -a 查看远程与本地分支
 * git branch -d \<brand-name> 删除 brand-name 分支，并将brand-name 分支合并至当前分支
 * git branch -D \<brand-name> 删除 brand-name 分支，但不合并
-* git push \<remote-name> \<branch-name> 删除远程分支
+* git push \<remote-name> :\<branch-name> 删除远程分支
+* git remote prune origin  本地与远程分支同步
 * git merge \<brand-name> 合并分支
 * 
 
