@@ -50,6 +50,24 @@ git commit -amend
 ### 远程仓库
 * git remote -v 显示所有的远程仓库
 * git  remote show \<remote-name> 显示远程仓库信息
+
+```
+>>> git remote show origin
+* remote origin
+  Fetch URL: git@github.com:tonsh/tonsh.github.io.git
+  Push  URL: git@github.com:tonsh/tonsh.github.io.git
+  HEAD branch: master   --> 当前所在分支
+  Remote branches:      --> 目前存在的远程分支
+    demo    tracked
+    develop tracked
+    master  tracked
+  Local branch configured for 'git pull':   --> 运行 git pull 时自动合并的分支
+    master merges with remote master
+  New remote branches (next fetch will store in remotes/origin) --> 还没有同步到本地的远程分支
+    demo_3
+  Stale tracking branches (use 'git remote prune')  --> 已同步到本地的远端分支在远端服务器上已被删除
+    demo_2
+```
 * git remote add \<remote-name> \<url> 添加远程仓库
 * git push \<remote-name> \<branch-name> 将 HEAD 中的数据提交至远程版本库。该命令需要有远程仓库服务器的写权限，如果有权限限制的版本库可以参考 GitHub 的 forking 使用。
 * git pull 从远程版本库更新最新代码
