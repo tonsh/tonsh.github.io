@@ -73,11 +73,19 @@ git remote -v
 * git branch -D \<brand-name> 删除 brand-name 分支，但不合并
 * git push \<remote-name> \<branch-name> 删除远程分支
 * git merge \<brand-name> 合并分支
+* 
+
+#### 标签
+* 查看最近两条tag列表
+    ```
+    git describe --tag `git rev-list --tags --max-count=2` 
+    ```
 
 ### 配置
 * git config [--global] user.name \<Firstname Lastname> 配置用户信息
 * git config [--global] user.email \<your-email>
 * git config [--global] core.editor emacs 设置文本编辑器为 emacs, 默认为 vim
+* git config autocrlf true  保证 Mac 和 Linux 系统不会引入 CRLF 换行符（会把 CRLF 换行符替换为 LF）
 
 <pre class="reference">
 参考资料:
