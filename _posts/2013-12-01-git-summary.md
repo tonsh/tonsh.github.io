@@ -49,6 +49,7 @@ git commit -amend
 
 ### 远程仓库
 * git remote -v 显示所有的远程仓库
+* git  remote show \<remote-name> 显示远程仓库信息
 * git remote add \<remote-name> \<url> 添加远程仓库
 * git push \<remote-name> \<branch-name> 将 HEAD 中的数据提交至远程版本库。该命令需要有远程仓库服务器的写权限，如果有权限限制的版本库可以参考 GitHub 的 forking 使用。
 * git pull 从远程版本库更新最新代码
