@@ -193,13 +193,13 @@ handlers=root
 
 [logger_foo]
 level=DEBUG
-handlers=FileHandler
+handlers=foo
 qualname=foo
 propagate=0
 
 [logger_bar]
 level=DEBUG
-handlers=RotatingFileHandler
+handlers=bar
 qualname=bar
 propagate=0
 
@@ -240,7 +240,7 @@ class=logging.Formatter
 import logging
 import logging.config
 
-logging.config.fileConfig('cfg.ini') 
+logging.config.fileConfig('logging.ini') 
  
 logger = logging.getLogger() 
 logger_foo = logging.getLogger('foo') 
