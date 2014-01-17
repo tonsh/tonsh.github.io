@@ -275,5 +275,6 @@ logger.INFO('logger is not work!')
     <a href="http://docs.python.org/2/library/logging.html" target="_blank">logging</a>
     <a href="http://docs.python.org/2/library/logging.handlers.html" target="_blank">logging.handlers</a>
     <a href="http://docs.python.org/2/library/logging.config.html" target="_blank">logging.config</a>
+    <a href="http://www.bitstech.net/2014/01/07/log-best-practice/" target="_blank">最佳日志实践</a>
    《Python 标准库》712P
 </pre>
