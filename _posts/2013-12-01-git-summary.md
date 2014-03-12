@@ -45,7 +45,7 @@ pick: xxxxxxxx
 
 git commit --amend
 
-git rebase --contijue  --> 修改完毕，回到最新版本
+git rebase --continue  --> 修改完毕，回到最新版本
 ```
 
 ### 内容比较
