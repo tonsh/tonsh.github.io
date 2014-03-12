@@ -31,6 +31,23 @@ git add forget_me.py
 git commit -amend
 ```
 
+* 修改历史提交
+
+```
+git rebase -i HEAD~3  --> 要修改当前版本的倒数第三次提交内容
+
+pick: xxxxxxxx
+pick: xxxxxxxx
+pick: xxxxxxxx
+
+选择要修改的提交，将对应的 “pick” 改为 “edit” 保存退出；这时 git 显示已经在历史版本分支了。
+提交修改的内容。
+
+git commit --amend
+
+git rebase --contijue  --> 修改完毕，回到最新版本
+```
+
 ### 内容比较
 * git diff \<file-name> 查看工作目录的文件与暂存区的差异
 * git diff --cached 查看暂存区与上次提交(HEAD)的差异
