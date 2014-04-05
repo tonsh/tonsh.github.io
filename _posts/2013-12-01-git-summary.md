@@ -31,6 +31,23 @@ git add forget_me.py
 git commit -amend
 ```
 
+* 修改历史提交
+
+```
+git rebase -i HEAD~3  --> 要修改当前版本的倒数第三次提交内容
+
+pick: xxxxxxxx
+pick: xxxxxxxx
+pick: xxxxxxxx
+
+选择要修改的提交，将对应的 “pick” 改为 “edit” 保存退出；这时 git 显示已经在历史版本分支了。
+提交修改的内容。
+
+git commit --amend
+
+git rebase --continue  --> 修改完毕，回到最新版本
+```
+
 ### 内容比较
 * git diff \<file-name> 查看工作目录的文件与暂存区的差异
 * git diff --cached 查看暂存区与上次提交(HEAD)的差异
@@ -50,6 +67,24 @@ git commit -amend
 ### 远程仓库
 * git remote -v 显示所有的远程仓库
 * git  remote show \<remote-name> 显示远程仓库信息
+
+```
+>>> git remote show origin
+* remote origin
+  Fetch URL: git@github.com:tonsh/tonsh.github.io.git
+  Push  URL: git@github.com:tonsh/tonsh.github.io.git
+  HEAD branch: master   --> 当前所在分支
+  Remote branches:      --> 目前存在的远程分支
+    demo    tracked
+    develop tracked
+    master  tracked
+  Local branch configured for 'git pull':   --> 运行 git pull 时自动合并的分支
+    master merges with remote master
+  New remote branches (next fetch will store in remotes/origin) --> 还没有同步到本地的远程分支
+    demo_3
+  Stale tracking branches (use 'git remote prune')  --> 已同步到本地的远端分支在远端服务器上已被删除
+    demo_2
+```
 * git remote add \<remote-name> \<url> 添加远程仓库
 * git push \<remote-name> \<branch-name> 将 HEAD 中的数据提交至远程版本库。该命令需要有远程仓库服务器的写权限，如果有权限限制的版本库可以参考 GitHub 的 forking 使用。
 * git pull 从远程版本库更新最新代码
@@ -82,6 +117,8 @@ git remote -v
     ```
     git describe --tag `git rev-list --tags --max-count=2` 
     ```
+* git show-ref --tags 显示所有tags 及 对应的提交版本号（SHA1)
+* git show-ref $TAG 输出一个 $TAG 的 SHA1
 
 ### 配置
 * git config [--global] user.name \<Firstname Lastname> 配置用户信息
