@@ -1,7 +1,7 @@
 ---
 layout: post
 title: vim 常用技巧汇总
-date:   2014-04-06 13:50:33
+date:   2014-04-05 23:50:33
 categories: vim
 ---
 
@@ -61,7 +61,7 @@ categories: vim
 * 向下重复前一个搜索操作 **n**
 * 向上搜索单词 **?word**
 * 向上重复前一个搜索操作 **N**
-* 搜索光标所在的单词 *****
+* 搜索光标所在的单词 *
 * 替换内容 **%s/word/words/g**  g表示 global，全部替换
 
 
