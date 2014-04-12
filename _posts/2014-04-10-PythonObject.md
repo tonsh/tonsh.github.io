@@ -5,7 +5,7 @@ date: 2014-04-10 12:09:33
 categories: python
 ---
 
-今天再尝试使用 super() 方法初始化子类时，遇到异常 `TypeError: must be type, not classobj`。原因是 super() 方法只作用于 Python 的新式类(New-Style)。在 Python 中, 继承 object 的类称为新式类。与不继承 object 的类(经典类)的区别可以通过如下查看：
+今天尝试使用 super() 方法初始化子类时，遇到异常 `TypeError: must be type, not classobj`。原因是 super() 方法只作用于 Python 的新式类(New-Style)。在 Python 中, 继承 object 的类称为新式类。与不继承 object 的类(经典类)的区别可以通过如下查看：
 
 {% highlight python linenos %}
 class A:

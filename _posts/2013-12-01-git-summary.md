@@ -114,11 +114,18 @@ git remote -v
 
 #### 标签
 * 查看最近两条tag列表
+
     ```
     git describe --tag `git rev-list --tags --max-count=2` 
     ```
 * git show-ref --tags 显示所有tags 及 对应的提交版本号（SHA1)
 * git show-ref $TAG 输出一个 $TAG 的 SHA1
+* 添加标签
+
+    ```
+    git tag v1.0.19 master   # git tag $TAG $BRANCH
+    git push origin v1.0.19 
+    ```
 
 ### 配置
 * git config [--global] user.name \<Firstname Lastname> 配置用户信息
