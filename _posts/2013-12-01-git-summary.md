@@ -145,4 +145,5 @@ git remote -v
     <a href="http://rogerdudler.github.io/git-guide/index.zh.html" target="_blank">《git - 简易指南》</a>
     <a href="http://oli.jp/2012/git-powerup/" target="_blank">《Git config powerup with aliases, diff & log》</a>
     <a href="https://github.com/fengzimaster/systemConfig/blob/master/gitTest.md" target="_blank">《Git test commond》</a>
+    <a href="http://www.worldhello.net/gotgithub/index.html" target="_blank">《GotGithub》</a>
 </pre>
