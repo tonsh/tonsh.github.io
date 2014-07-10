@@ -126,6 +126,12 @@ git remote -v
     git tag v1.0.19 master   # git tag $TAG $BRANCH
     git push origin v1.0.19 
     ```
+* 删除标签
+
+  ```
+  git tag -d v1.0.19
+  git push origin :refs/tags/v1.0.19
+  ```
 
 ### 配置
 * git config [--global] user.name \<Firstname Lastname> 配置用户信息
@@ -139,4 +145,5 @@ git remote -v
     <a href="http://rogerdudler.github.io/git-guide/index.zh.html" target="_blank">《git - 简易指南》</a>
     <a href="http://oli.jp/2012/git-powerup/" target="_blank">《Git config powerup with aliases, diff & log》</a>
     <a href="https://github.com/fengzimaster/systemConfig/blob/master/gitTest.md" target="_blank">《Git test commond》</a>
+    <a href="http://www.worldhello.net/gotgithub/index.html" target="_blank">《GotGithub》</a>
 </pre>
