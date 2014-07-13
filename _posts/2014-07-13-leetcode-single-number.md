@@ -1,6 +1,6 @@
 ---
 layout: post
-title: LeetCode － Single Number 解题报告
+title: LeetCode - Single Number 解题报告
 date: 2014-07-13 13:46:33
 categories: LeetCode OJ 解题报告
 ---
@@ -16,7 +16,7 @@ Your algorithm should have a linear runtime complexity. Could you implement it w
 
 ##### 解题思路:
 
-  题中要求要在线性时间内容，不开辟额外空间解决问题。考虑到异或运算的特性，恰好有:
+  题中要求要在线性时间内，不开辟额外空间解决问题。考虑到异或运算的特性，恰好有:
 	
 	```
 	a XOR a = 0
