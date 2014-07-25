@@ -10,7 +10,7 @@ categories: Git
 Git 的 hooks 脚本放在项目目录的 .git/hooks 下, .sample 文件只是样例脚本，如果需要使用提交前的 hook 需要将 pre-commit.sample 文件重命名为 pre-commit, 这些脚本可以使用 shell, python, ruby 等任何可以调用 shell 命令的语言实现。
 
 以下为使用 pyflakes, pep8 检查 Python 语法, 并自动进行单元测试的脚本样例(仅做参考):
-{% highlight python linenos %}
+{% highlight python %}
 #! /usr/bin/env python
 # coding=utf-8
 """ 代码提交前实现自动语法检测 """
