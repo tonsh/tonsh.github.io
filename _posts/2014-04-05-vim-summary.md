@@ -120,18 +120,21 @@ categories: vim
 home 目录下的 .vimrc 为 vim 的配置文件。可以按注释开启适合自己的选项。以下列出的偏好设置仅供参考。修改配置文件，需重启vim才能查看效果。
 
 ```
-set autoindent		" 自动缩进
-set number	    	" 显示行号
-set cursorline		" 高亮光标所在行
-set cursorcolumn	" 高亮光标所在列
-set shiftwidth=4	" 自动缩进的空白长度为4个空格
-set tabstop=4		" tab 制表符的空白长度
-set expandtab		" 将制表符转换为（4个）空格
-set ic		    	" 搜索时忽略大小写
-set hlsearch		" 高亮显示搜索结果
-set noback			" 关闭自动备份（不生成临时文件）
-set autochdir			" 自动切换目录
-colorscheme torte		" 配色风格
+set ruler           " 标尺信息
+set autoindent      " 自动缩进
+set number          " 显示行号
+set cursorline      " 高亮光标所在行
+set cursorcolumn    " 高亮光标所在列
+set shiftwidth=4    " 自动缩进的空白长度为4个空格
+set tabstop=4       " TAB 制表符的空白长度
+set softtabstop=4   " 删除4个空格
+set expandtab       " 将制表符转换为（4个）空格
+set ic              " 搜索时忽略大小写
+set hlsearch        " 高亮显示搜索结果
+set nobackup        " 关闭自动备份（不生成临时文件）
+set autochdir       " 自动切换目录
+set encoding=utf-8
+colorscheme torte     " 配色风格
 set guifont=Menlo:h15	" 字体，大小
 ```
 
