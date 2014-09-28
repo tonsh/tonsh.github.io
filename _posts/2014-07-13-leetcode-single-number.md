@@ -23,6 +23,7 @@ Your algorithm should have a linear runtime complexity. Could you implement it w
 	0 XOR b = b
 	```
 即，原列表中所有出现过偶数次的数值由异或运算连接之后的结果为0; 假设原列表中仅出现一次的数值为 n, 根据 0 XOR n = n 可得 n 的值。
+
 {% highlight python %}
 class Solution:
     def singleNumber(self, A):
