@@ -29,9 +29,9 @@ class Solution:
     	"""
         	@param A a list of integer
         	@return an integer
-    	"""
+       	"""
     	result = A[0]
     	for item in A[1:]:
         	result = result^item
-    	return result
+        return result
 {% endhighlight %}
