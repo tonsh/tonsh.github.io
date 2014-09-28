@@ -26,12 +26,12 @@ Your algorithm should have a linear runtime complexity. Could you implement it w
 {% highlight python %}
 class Solution:
     def singleNumber(self, A):
-    """
-        @param A a list of integer
-        @return an integer
-    """
-    result = A[0]
-    for item in A[1:]:
-        result = result^item
-    return result
+    	"""
+        	@param A a list of integer
+        	@return an integer
+    	"""
+    	result = A[0]
+    	for item in A[1:]:
+        	result = result^item
+    	return result
 {% endhighlight %}
