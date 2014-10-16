@@ -136,6 +136,11 @@ set autochdir       " 自动切换目录
 set encoding=utf-8
 colorscheme torte     " 配色风格
 set guifont=Menlo:h15	" 字体，大小
+
+" 恢复文件关闭之前光标的位置
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 ```
 
 
