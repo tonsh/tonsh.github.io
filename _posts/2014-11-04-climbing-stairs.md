@@ -47,5 +47,7 @@ class Solution:
 <pre class="reference">
 练习:
 
+    <a href="https://oj.leetcode.com/problems/maximum-depth-of-binary-tree/" target="_blank">Maximum Depth of Binary Tree</a>
+    <a href="https://oj.leetcode.com/problems/same-tree/" target="_blank">Same Tree</a>
     <a href="https://oj.leetcode.com/problems/unique-paths/" target="_blank">Unique Paths</a>
 </pre>
