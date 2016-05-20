@@ -110,7 +110,7 @@ git remote -v
 * git push \<remote-name> :\<branch-name> 删除远程分支
 * git remote prune origin  本地与远程分支同步
 * git merge \<brand-name> 合并分支
-* git cherry-pick :\<commit-id> 合并特定分支
+* git cherry-pick :\<commit-id> 合并指定 commit
 
 #### 标签
 * 查看最近两条tag列表
