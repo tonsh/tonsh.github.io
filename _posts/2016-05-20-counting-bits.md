@@ -41,10 +41,6 @@ n^2 ~ (n + 1)^2 的二进制 1 的个数分别对应 0 ~ n^2-1 的个数 + 1
 {% highlight python %}
 class Solution(object):
     def countBits(self, num):
-        """
-        :type num: int
-        :rtype: List[int]
-        """
         result = [0] * (num + 1)
 
         power = 1
