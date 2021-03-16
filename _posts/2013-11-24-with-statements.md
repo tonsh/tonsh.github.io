@@ -14,7 +14,7 @@ with open('demo.txt', 'r') as f:
 以上代码实现了打印目标文档的内容。 这里的 with 声明等价于：
 
 {% highlight python %}
-f = open('demo.txt', 'r)
+f = open('demo.txt', 'r')
 for line in f.readlines():
 	print line
 f.close()
@@ -113,8 +113,7 @@ class AutoFlushing(object):
 	# 厕所初始情况下是干净的
 	_flushed = True
 	
-	def have_a_piss(self):
-		# 自行YY吧
+	def do_somthing(self):
 		pass
 	
 	def flush(self):
@@ -127,9 +126,7 @@ class AutoFlushing(object):
 	def __exit__(self, *args):
 		self.flush()
 		
-# 小萌来上厕所，会自动冲水的哦！
+# 有人来上厕所，会自动冲水的哦！
 with AutoFlushing() as fl:
-	fl.have_a_piss()
+	fl.do_somthing()
 {% endhighlight %}
-
-至此写完，节操掉一地，掩面逃走！
